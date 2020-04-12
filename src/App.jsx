@@ -4,12 +4,13 @@ class IssueFilter extends React.Component{
     render() {
         return (
             <div>This is a placeholder for the Issue Filter</div>
-        )
+            )
+        }
     }
-}
-
-class IssueRow extends React.Component{
-    render(){
+    
+    class IssueRow extends React.Component{
+        render(){
+        console.log("I am rendered!!");
         const issue = this.props.issue;
         return (
             <tr>
@@ -69,16 +70,37 @@ const issues = [
         title: 'Missing bottom border on panel',        
     }
 ]
+
 class IssueList extends React.Component {
-    render(){
+    constructor() {
+        super();
+        this.state = {issues: issues};
+        setTimeout(this.createTestIssue.bind(this), 2000);
+    }
+
+    createIssue(newIssue)
+    {
+        const newIssues = this.state.issues.slice();
+        newIssue.id = this.state.issues.length + 1;
+        newIssues.push(newIssue);
+        this.setState({issues: newIssues});
+    }
+
+    createTestIssue() {
+        this.createIssue({
+            status: 'New', owner: 'Pieta', created: new Date(),
+            title: 'Completion date should be optional',
+        });
+    }
+    render() {
         return (
             <div>
                 <h1>Issue Tracker</h1>
-                <IssueFilter/>
-                <hr/>
-                <IssueTable issues={issues}/>
-                <hr/>
-                <IssueAdd/>
+                <IssueFilter />
+                <hr />
+                <IssueTable issues={this.state.issues} />
+                <hr />
+                <IssueAdd />
             </div>
         );
     }
