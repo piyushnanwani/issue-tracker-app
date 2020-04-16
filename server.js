@@ -2,7 +2,10 @@ const express = require('express');
 
 const app = express();
 
+const bodyParser = require('body-parser');
 app.use(express.static('static'));
+
+app.use(bodyParser.json());
 
 const issues = [
     {
@@ -18,13 +21,23 @@ const issues = [
     }
 ]
 app.disable('etag');
-console.log("Response 2");
+
 app.get('/api/issues', (req,res)=> {
     const metadata = {total_count: issues.length};
-    console.log("Kasie hua!!");
     res.json({_metadata: metadata, records:issues});
 })
 
+app.post('/api/issues', (req,res)=> {
+    const newIssue = req.body;
+    newIssue.id = issues.length + 1;
+    newIssue.created = new Date();
+
+    if(!newIssue.status)
+        newIssue.status = 'New';
+    issues.push(newIssue);
+
+    res.json(newIssue)
+})
 app.listen(3000, function () {
     console.log('App started on port 3000');
 });
