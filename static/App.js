@@ -183,17 +183,6 @@ var IssueAdd = function (_React$Component2) {
     return IssueAdd;
 }(React.Component);
 
-var issues = [{
-    id: 1, status: 'Open', owner: 'Raven',
-    created: new Date('2016-08-15'), effort: 5, completionDate: undefined,
-    title: 'Error in console when clicking Add'
-}, {
-    id: 2, status: 'Assigned', owner: 'Eddie',
-    created: new Date('2016-08-16'), effort: 14,
-    completionDate: new Date('2016-08-30'),
-    title: 'Missing bottom border on panel'
-}];
-
 var IssueList = function (_React$Component3) {
     _inherits(IssueList, _React$Component3);
 
@@ -217,9 +206,18 @@ var IssueList = function (_React$Component3) {
         value: function loadData() {
             var _this4 = this;
 
-            setTimeout(function () {
-                _this4.setState({ issues: issues });
-            }, 500);
+            fetch('/api/issues').then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log("Total count of records:", data._metadata.total_count);
+                data.records.forEach(function (issue) {
+                    issue.created = new Date(issue.created);
+                    if (issue.completionDate) issue.completionDate = new Date(issue.completionDate);
+                });
+                _this4.setState({ issues: data.records });
+            }).catch(function (err) {
+                console.log(err);
+            });
         }
     }, {
         key: 'createIssue',

@@ -78,19 +78,6 @@ class IssueAdd extends React.Component{
         )
     }
 }
-const issues = [
-    {
-        id: 1, status:'Open', owner:'Raven',
-        created: new Date('2016-08-15'), effort: 5, completionDate: undefined, 
-        title: 'Error in console when clicking Add',
-    }, 
-    {
-        id: 2, status:'Assigned', owner:'Eddie',
-        created: new Date('2016-08-16'), effort: 14, 
-        completionDate: new Date('2016-08-30'), 
-        title: 'Missing bottom border on panel',        
-    }
-]
 
 class IssueList extends React.Component {
     constructor() {
@@ -104,9 +91,19 @@ class IssueList extends React.Component {
     }
 
     loadData() {
-        setTimeout(() => {
-            this.setState({issues: issues});
-        }, 500);
+        fetch('/api/issues').then(response => 
+            response.json()
+            ).then(data => {
+                console.log("Total count of records:", data._metadata.total_count);
+                data.records.forEach(issue => {
+                    issue.created = new Date(issue.created);
+                    if(issue.completionDate)
+                        issue.completionDate = new Date(issue.completionDate);
+                });
+                this.setState({issues: data.records});
+            }).catch(err => {
+                console.log(err);
+            })
     }
     
     createIssue(newIssue)
