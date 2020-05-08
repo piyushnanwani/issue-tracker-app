@@ -11,14 +11,13 @@ const MongoClient = require('mongodb').MongoClient;
 const Issue = require('./issue.js');
 
 let db;
-MongoClient.connect('mongodb://localhost/issuetracker').then(connection => {
-    db = connection;
-    app.listen(3000, function () {
-        console.log('App started on port 3000');
-    });
-}).catch(error => {
-    console.log('ERROR',error);
+MongoClient.connect('mongodb://localhost', (err,client)=> {
+    db = client.db('issuetracker');
+    app.listen(3000,()=> {
+        console.log('App started on port 3000')
+    })
 });
+
 app.disable('etag');
  
 app.get('/api/issues', (req,res)=> {
