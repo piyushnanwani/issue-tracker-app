@@ -1,10 +1,23 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, hashHistory} from 'react-router';
+
+
 import IssueList from './IssueList';
+import IssueEdit from './IssueEdit';
 
 const  contentNode = document.getElementById('contents');
-ReactDOM.render(<IssueList/>, contentNode);
-// import { Router, Router, hashHistory } from "react-router";
+const NoMatch = () => <p>Page Not Found</p>;
+const RoutedApp = () => {
+    <Router history={hashHistory} >
+        <Route path='/' component={IssueList} />
+        <Route path='/issueEdit' component={IssueEdit} />
+        <Route path='*' component={NoMatch}  />
+    </Router>
+}
+
+ReactDOM.render(<RoutedApp/>, contentNode);
 
 
 
@@ -13,5 +26,4 @@ ReactDOM.render(<IssueList/>, contentNode);
 
 
 
-// import 'babel-polyfill';
 
