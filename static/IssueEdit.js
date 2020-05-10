@@ -29,7 +29,6 @@ var IssueEdit = function (_React$Component) {
 
     _createClass(IssueEdit, [{
         key: 'render',
-        // eslint - disable line
         value: function render() {
             return _react2.default.createElement(
                 'div',
