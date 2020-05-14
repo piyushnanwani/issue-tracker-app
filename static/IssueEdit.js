@@ -10,7 +10,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = require('react-router');
+var _reactRouterDom = require('react-router-dom');
 
 var _propTypes = require('prop-types');
 
@@ -46,7 +46,7 @@ var IssueEdit = function (_React$Component) {
                     this.props.params.id
                 ),
                 _react2.default.createElement(
-                    _reactRouter.Link,
+                    _reactRouterDom.Link,
                     { to: '/issues' },
                     'back to issue list'
                 )

@@ -41,13 +41,9 @@ var RoutedApp = function RoutedApp() {
         _reactRouterDom.BrowserRouter,
         null,
         _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
-        _react2.default.createElement(
-            _reactRouter.Switch,
-            null,
-            _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
-            _react2.default.createElement(_reactRouter.Route, { path: '/issues:id', component: _IssueEdit2.default }),
-            _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
-        )
+        _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/issues/id', component: _IssueEdit2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
     );
 };
 

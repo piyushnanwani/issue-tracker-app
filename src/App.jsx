@@ -16,12 +16,8 @@ const RoutedApp = () => (
             <Redirect from ="/" to ="/issues" />
         <Switch>
             <Route path="/issues" component={IssueList} />
-            <Route path="/issues:id" component={IssueEdit} />
+            <Route path="/issues/id" component={IssueEdit} />
             <Route path="*" component={NoMatch}  />
-            {/* <Route path="/issues" component={NoMatch} />
-            <Route path="/issues" component={IssueFilter} /> */}
-            {/* <Route path="/issues" component={IssueList} /> */}
-
         </Switch>
     </BrowserRouter>
 );

@@ -20,6 +20,8 @@ var _IssueFilter = require('./IssueFilter');
 
 var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
 
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,7 +37,13 @@ var IssueRow = function IssueRow(props) {
         _react2.default.createElement(
             'td',
             null,
-            props.issue._id
+            _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/issues/' + props.issue._id },
+                ' ',
+                props.issue._id.substr(-4),
+                ' '
+            )
         ),
         _react2.default.createElement(
             'td',
