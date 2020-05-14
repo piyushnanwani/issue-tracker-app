@@ -22,6 +22,10 @@ var _IssueEdit = require('./IssueEdit');
 
 var _IssueEdit2 = _interopRequireDefault(_IssueEdit);
 
+var _IssueFilter = require('./IssueFilter');
+
+var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var contentNode = document.getElementById('contents');
@@ -35,12 +39,15 @@ var NoMatch = function NoMatch() {
 var RoutedApp = function RoutedApp() {
     return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        { history: _reactRouter.hashHistory },
+        null,
         _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues:id', component: _IssueEdit2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issueEdit', component: _IssueEdit2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
+        _react2.default.createElement(
+            _reactRouter.Switch,
+            null,
+            _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: '/issues:id', component: _IssueEdit2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
+        )
     );
 };
 

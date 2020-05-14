@@ -41486,6 +41486,10 @@ var _IssueEdit = require('./IssueEdit');
 
 var _IssueEdit2 = _interopRequireDefault(_IssueEdit);
 
+var _IssueFilter = require('./IssueFilter');
+
+var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var contentNode = document.getElementById('contents');
@@ -41499,12 +41503,15 @@ var NoMatch = function NoMatch() {
 var RoutedApp = function RoutedApp() {
     return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        { history: _reactRouter.hashHistory },
+        null,
         _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues:id', component: _IssueEdit2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issueEdit', component: _IssueEdit2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
+        _react2.default.createElement(
+            _reactRouter.Switch,
+            null,
+            _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: '/issues:id', component: _IssueEdit2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
+        )
     );
 };
 
@@ -41513,7 +41520,7 @@ _reactDom2.default.render(_react2.default.createElement(RoutedApp, null), conten
 if (module.hot) {
     module.hot.accept();
 }
-},{"./IssueEdit":380,"./IssueList":382,"babel-polyfill":3,"react":362,"react-dom":350,"react-router":359,"react-router-dom":356}],379:[function(require,module,exports){
+},{"./IssueEdit":380,"./IssueFilter":381,"./IssueList":382,"babel-polyfill":3,"react":362,"react-dom":350,"react-router":359,"react-router-dom":356}],379:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41598,6 +41605,12 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = require('react-router');
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41621,7 +41634,17 @@ var IssueEdit = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                ' This is a placeholder for the Issue Edit page'
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    'This is a placeholder for the editing issue',
+                    this.props.params.id
+                ),
+                _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/issues' },
+                    'back to issue list'
+                )
             );
         }
     }]);
@@ -41630,7 +41653,12 @@ var IssueEdit = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueEdit;
-},{"react":362}],381:[function(require,module,exports){
+
+
+IssueEdit.propTypes = {
+    params: _propTypes2.default.object.isRequired
+};
+},{"prop-types":346,"react":362,"react-router":359}],381:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

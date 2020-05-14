@@ -2,7 +2,6 @@ import React from 'react';
 import 'whatwg-fetch';
 import IssueAdd from './IssueAdd';
 import IssueFilter from './IssueFilter'
-
 const IssueRow = (props) => (
 
     <tr>
