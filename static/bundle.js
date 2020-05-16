@@ -41474,8 +41474,6 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouter = require('react-router');
-
 var _reactRouterDom = require('react-router-dom');
 
 var _IssueList = require('./IssueList');
@@ -41503,11 +41501,11 @@ var NoMatch = function NoMatch() {
 var RoutedApp = function RoutedApp() {
     return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        null,
-        _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues/id', component: _IssueEdit2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
+        { history: _reactRouterDom.hashHistory },
+        _react2.default.createElement(_reactRouterDom.Redirect, { from: '/', to: '/issues' }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/issues', component: _IssueList2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '*', component: NoMatch })
     );
 };
 
@@ -41516,7 +41514,7 @@ _reactDom2.default.render(_react2.default.createElement(RoutedApp, null), conten
 if (module.hot) {
     module.hot.accept();
 }
-},{"./IssueEdit":380,"./IssueFilter":381,"./IssueList":382,"babel-polyfill":3,"react":362,"react-dom":350,"react-router":359,"react-router-dom":356}],379:[function(require,module,exports){
+},{"./IssueEdit":380,"./IssueFilter":381,"./IssueList":382,"babel-polyfill":3,"react":362,"react-dom":350,"react-router-dom":356}],379:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41634,7 +41632,7 @@ var IssueEdit = function (_React$Component) {
                     'p',
                     null,
                     'This is a placeholder for the editing issue',
-                    this.props.params.id
+                    this.props.match.params.id
                 ),
                 _react2.default.createElement(
                     _reactRouterDom.Link,
@@ -41652,7 +41650,7 @@ exports.default = IssueEdit;
 
 
 IssueEdit.propTypes = {
-    params: _propTypes2.default.object.isRequired
+    id: _propTypes2.default.object.isRequired
 };
 },{"prop-types":346,"react":362,"react-router-dom":356}],381:[function(require,module,exports){
 'use strict';

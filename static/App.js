@@ -10,8 +10,6 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouter = require('react-router');
-
 var _reactRouterDom = require('react-router-dom');
 
 var _IssueList = require('./IssueList');
@@ -39,11 +37,11 @@ var NoMatch = function NoMatch() {
 var RoutedApp = function RoutedApp() {
     return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        null,
-        _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues', component: _IssueList2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/issues/id', component: _IssueEdit2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
+        { history: _reactRouterDom.hashHistory },
+        _react2.default.createElement(_reactRouterDom.Redirect, { from: '/', to: '/issues' }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/issues', component: _IssueList2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '*', component: NoMatch })
     );
 };
 

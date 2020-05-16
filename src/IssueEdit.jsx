@@ -9,7 +9,7 @@ export default class IssueEdit extends React.Component
             <div> 
                 <p>
                 This is a placeholder for the editing issue
-                { this.props.params.id }
+                {this.props.match.params.id}
                 </p>
                 <Link to="/issues">back to issue list</Link>
             </div>
@@ -19,5 +19,5 @@ export default class IssueEdit extends React.Component
 }
 
 IssueEdit.propTypes = {
-    params: PropTypes.object.isRequired,
+    id: PropTypes.object.isRequired,
 };
