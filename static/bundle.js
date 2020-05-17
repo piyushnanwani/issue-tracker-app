@@ -41503,7 +41503,7 @@ var NoMatch = function NoMatch() {
 var RoutedApp = function RoutedApp() {
     return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        null,
+        { history: _reactRouterDom.hashHistory },
         _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
         _react2.default.createElement(
             _reactRouter.Switch,
@@ -41671,6 +41671,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41691,10 +41693,33 @@ var IssueFilter = function (_React$Component) {
     _createClass(IssueFilter, [{
         key: 'render',
         value: function render() {
+            var Separator = function Separator() {
+                return _react2.default.createElement(
+                    'span',
+                    null,
+                    ' | '
+                );
+            };
             return _react2.default.createElement(
                 'div',
                 null,
-                'This is a placeholder for the Issue Filter'
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/issues' },
+                    'All Issues'
+                ),
+                _react2.default.createElement(Separator, null),
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Open' },
+                    'Open Issues'
+                ),
+                _react2.default.createElement(Separator, null),
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Assigned' },
+                    'Assigned Issues'
+                )
             );
         }
     }]);
@@ -41703,7 +41728,7 @@ var IssueFilter = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueFilter;
-},{"react":362}],382:[function(require,module,exports){
+},{"react":362,"react-router-dom":356}],382:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41725,6 +41750,10 @@ var _IssueAdd2 = _interopRequireDefault(_IssueAdd);
 var _IssueFilter = require('./IssueFilter');
 
 var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41853,11 +41882,19 @@ var IssueList = function (_React$Component) {
             this.loadData();
         }
     }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            var oldQuery = prevProps.location.search;
+            var newQuery = this.props.location.search;
+            if (oldQuery === newQuery) return;
+            this.loadData();
+        }
+    }, {
         key: 'loadData',
         value: function loadData() {
             var _this2 = this;
 
-            fetch('/api/issues').then(function (response) {
+            fetch('/api/issues' + this.props.location.search).then(function (response) {
                 if (response.ok) {
                     response.json().then(function (data) {
                         console.log("Total count of records:", data._metadata.total_count);
@@ -41927,4 +41964,8 @@ var IssueList = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueList;
-},{"./IssueAdd":379,"./IssueFilter":381,"react":362,"whatwg-fetch":377}]},{},[378]);
+
+IssueList.propTypes = {
+    location: _propTypes2.default.object.isRequired
+};
+},{"./IssueAdd":379,"./IssueFilter":381,"prop-types":346,"react":362,"whatwg-fetch":377}]},{},[378]);

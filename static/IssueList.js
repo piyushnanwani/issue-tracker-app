@@ -20,6 +20,10 @@ var _IssueFilter = require('./IssueFilter');
 
 var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -147,11 +151,19 @@ var IssueList = function (_React$Component) {
             this.loadData();
         }
     }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            var oldQuery = prevProps.location.search;
+            var newQuery = this.props.location.search;
+            if (oldQuery === newQuery) return;
+            this.loadData();
+        }
+    }, {
         key: 'loadData',
         value: function loadData() {
             var _this2 = this;
 
-            fetch('/api/issues').then(function (response) {
+            fetch('/api/issues' + this.props.location.search).then(function (response) {
                 if (response.ok) {
                     response.json().then(function (data) {
                         console.log("Total count of records:", data._metadata.total_count);
@@ -221,3 +233,7 @@ var IssueList = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueList;
+
+IssueList.propTypes = {
+    location: _propTypes2.default.object.isRequired
+};

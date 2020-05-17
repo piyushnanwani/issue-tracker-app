@@ -39,7 +39,7 @@ var NoMatch = function NoMatch() {
 var RoutedApp = function RoutedApp() {
     return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        null,
+        { history: _reactRouterDom.hashHistory },
         _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
         _react2.default.createElement(
             _reactRouter.Switch,
@@ -52,7 +52,3 @@ var RoutedApp = function RoutedApp() {
 };
 
 _reactDom2.default.render(_react2.default.createElement(RoutedApp, null), contentNode);
-
-if (module.hot) {
-    module.hot.accept();
-}
