@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 import IssueAdd from './IssueAdd';
 import IssueFilter from './IssueFilter';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const IssueRow = (props) => (
 
@@ -51,9 +52,17 @@ export default class IssueList extends React.Component {
     componentDidMount() {
         this.loadData();
     }
+    componentDidUpdate(prevProps) {
+        const oldQuery = prevProps.location.search;
+        const newQuery = this.props.location.search;
+        if (oldQuery === newQuery)
+            return;
+        this.loadData();
+
+    }
 
     loadData() {
-        fetch('/api/issues').then(response => {
+        fetch(`/api/issues${this.props.location.search}`).then(response => {
             if (response.ok) {
                 response.json()
                     .then(data => {
@@ -103,7 +112,6 @@ export default class IssueList extends React.Component {
     render() {
         return (
             <div>
-                <h1>Issue Tracker</h1>
                 <IssueFilter />
                 <hr />
                 <IssueTable issues={this.state.issues} />
@@ -113,3 +121,6 @@ export default class IssueList extends React.Component {
         );
     }
 }
+IssueList.propTypes = {
+    location: PropTypes.object.isRequired,
+};

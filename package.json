@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -w server  server/server.js",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "compileOld": "babel src --presets react,es2015 --out-dir static",
-    "watchOld": "babel src --presets react,es2015 --out-dir static --watch",
+    "bundle": "browserify static/App.js > static/bundle.js",
+    "compile": "babel src --presets react,es2015 --out-dir static",
+    "watch": "babel src --presets react,es2015 --out-dir static --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

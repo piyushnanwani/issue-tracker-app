@@ -10,6 +10,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30,10 +32,33 @@ var IssueFilter = function (_React$Component) {
     _createClass(IssueFilter, [{
         key: 'render',
         value: function render() {
+            var Separator = function Separator() {
+                return _react2.default.createElement(
+                    'span',
+                    null,
+                    ' | '
+                );
+            };
             return _react2.default.createElement(
                 'div',
                 null,
-                'This is a placeholder for the Issue Filter'
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/issues' },
+                    'All Issues'
+                ),
+                _react2.default.createElement(Separator, null),
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Open' },
+                    'Open Issues'
+                ),
+                _react2.default.createElement(Separator, null),
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Assigned' },
+                    'Assigned Issues'
+                )
             );
         }
     }]);
