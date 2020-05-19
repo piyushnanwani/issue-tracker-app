@@ -33,12 +33,16 @@ App.propTypes = {
 const RoutedApp = () => (
     <BrowserRouter history={hashHistory} >
         <Redirect from="/" to="/issues" />
-        <App>
-                
-                <Route exact path="/issues" component={IssueList} />
-                <Route exact path="/issues/:id" component={IssueEdit} />
-                <Route  exact path="*" component={NoMatch} />
+
+        <Switch>
+            <App>
+                    <Route exact path="/issues" component={withRouter(IssueList)} />
+                    <Route exact path="/issues/:id" component={IssueEdit} />
             </App>
+            <Route path="/404" component={NoMatch} />
+            <Redirect to="/404" />
+
+        </Switch>
 
     </BrowserRouter>
 );

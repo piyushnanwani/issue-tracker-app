@@ -150,6 +150,7 @@ var IssueList = function (_React$Component) {
 
         _this.state = { issues: [] };
         _this.createIssue = _this.createIssue.bind(_this);
+        _this.setFilter = _this.setFilter.bind(_this);
         return _this;
     }
 
@@ -218,12 +219,17 @@ var IssueList = function (_React$Component) {
             });
         }
     }, {
+        key: 'setFilter',
+        value: function setFilter(query) {
+            this.props.router.push({ pathname: this.props.location.pathname, query: query });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_IssueFilter2.default, null),
+                _react2.default.createElement(_IssueFilter2.default, { setFilter: this.setFilter }),
                 _react2.default.createElement('hr', null),
                 _react2.default.createElement(IssueTable, { issues: this.state.issues }),
                 _react2.default.createElement('hr', null),
@@ -238,5 +244,6 @@ var IssueList = function (_React$Component) {
 exports.default = IssueList;
 
 IssueList.propTypes = {
-    location: _propTypes2.default.object.isRequired
+    location: _propTypes2.default.object.isRequired,
+    router: _propTypes2.default.object
 };

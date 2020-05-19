@@ -26,10 +26,33 @@ var IssueFilter = function (_React$Component) {
     function IssueFilter() {
         _classCallCheck(this, IssueFilter);
 
-        return _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).call(this));
+
+        _this.clearFilter = _this.clearFilter.bind(_this);
+        _this.setFilterOpen = _this.setFilterOpen.bind(_this);
+        _this.setFilterAssigned = _this.setFilterAssigned.bind(_this);
+        return _this;
     }
 
     _createClass(IssueFilter, [{
+        key: 'setFilterOpen',
+        value: function setFilterOpen(e) {
+            e.preventDefault();
+            this.props.setFilter({ status: 'Open' });
+        }
+    }, {
+        key: 'setFilterAssigned',
+        value: function setFilterAssigned(e) {
+            e.preventDefault();
+            this.props.setFilter({ status: 'Assigned' });
+        }
+    }, {
+        key: 'clearFilter',
+        value: function clearFilter(e) {
+            e.preventDefault();
+            this.props.setFilter();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var Separator = function Separator() {

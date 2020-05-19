@@ -33571,11 +33571,16 @@ var RoutedApp = function RoutedApp() {
         { history: _reactRouterDom.hashHistory },
         _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
         _react2.default.createElement(
-            App,
+            _reactRouter.Switch,
             null,
-            _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues', component: _IssueList2.default }),
-            _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default }),
-            _react2.default.createElement(_reactRouter.Route, { exact: true, path: '*', component: NoMatch })
+            _react2.default.createElement(
+                App,
+                null,
+                _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues', component: (0, _reactRouterDom.withRouter)(_IssueList2.default) }),
+                _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default })
+            ),
+            _react2.default.createElement(_reactRouter.Route, { path: '/404', component: NoMatch }),
+            _react2.default.createElement(_reactRouter.Redirect, { to: '/404' })
         )
     );
 };
@@ -33748,10 +33753,33 @@ var IssueFilter = function (_React$Component) {
     function IssueFilter() {
         _classCallCheck(this, IssueFilter);
 
-        return _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).call(this));
+
+        _this.clearFilter = _this.clearFilter.bind(_this);
+        _this.setFilterOpen = _this.setFilterOpen.bind(_this);
+        _this.setFilterAssigned = _this.setFilterAssigned.bind(_this);
+        return _this;
     }
 
     _createClass(IssueFilter, [{
+        key: 'setFilterOpen',
+        value: function setFilterOpen(e) {
+            e.preventDefault();
+            this.props.setFilter({ status: 'Open' });
+        }
+    }, {
+        key: 'setFilterAssigned',
+        value: function setFilterAssigned(e) {
+            e.preventDefault();
+            this.props.setFilter({ status: 'Assigned' });
+        }
+    }, {
+        key: 'clearFilter',
+        value: function clearFilter(e) {
+            e.preventDefault();
+            this.props.setFilter();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var Separator = function Separator() {
@@ -33942,6 +33970,7 @@ var IssueList = function (_React$Component) {
 
         _this.state = { issues: [] };
         _this.createIssue = _this.createIssue.bind(_this);
+        _this.setFilter = _this.setFilter.bind(_this);
         return _this;
     }
 
@@ -34010,12 +34039,17 @@ var IssueList = function (_React$Component) {
             });
         }
     }, {
+        key: 'setFilter',
+        value: function setFilter(query) {
+            this.props.router.push({ pathname: this.props.location.pathname, query: query });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_IssueFilter2.default, null),
+                _react2.default.createElement(_IssueFilter2.default, { setFilter: this.setFilter }),
                 _react2.default.createElement('hr', null),
                 _react2.default.createElement(IssueTable, { issues: this.state.issues }),
                 _react2.default.createElement('hr', null),
@@ -34030,6 +34064,7 @@ var IssueList = function (_React$Component) {
 exports.default = IssueList;
 
 IssueList.propTypes = {
-    location: _propTypes2.default.object.isRequired
+    location: _propTypes2.default.object.isRequired,
+    router: _propTypes2.default.object
 };
 },{"./IssueAdd":48,"./IssueFilter":50,"prop-types":15,"react":31,"react-router-dom":25,"whatwg-fetch":46}]},{},[47]);

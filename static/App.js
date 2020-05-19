@@ -78,11 +78,16 @@ var RoutedApp = function RoutedApp() {
         { history: _reactRouterDom.hashHistory },
         _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/issues' }),
         _react2.default.createElement(
-            App,
+            _reactRouter.Switch,
             null,
-            _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues', component: _IssueList2.default }),
-            _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default }),
-            _react2.default.createElement(_reactRouter.Route, { exact: true, path: '*', component: NoMatch })
+            _react2.default.createElement(
+                App,
+                null,
+                _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues', component: (0, _reactRouterDom.withRouter)(_IssueList2.default) }),
+                _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default })
+            ),
+            _react2.default.createElement(_reactRouter.Route, { path: '/404', component: NoMatch }),
+            _react2.default.createElement(_reactRouter.Redirect, { to: '/404' })
         )
     );
 };
