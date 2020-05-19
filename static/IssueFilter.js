@@ -10,7 +10,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = require('react-router-dom');
+var _propTypes = require('prop-types');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,20 +66,20 @@ var IssueFilter = function (_React$Component) {
                 'div',
                 null,
                 _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues' },
+                    'a',
+                    { href: '#', onClick: this.clearFilter },
                     'All Issues'
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues?status=Open' },
+                    'a',
+                    { href: '#', onClick: this.setFilterOpen },
                     'Open Issues'
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues?status=Assigned' },
+                    'a',
+                    { href: '#', onClick: this.setFilterAssigned },
                     'Assigned Issues'
                 )
             );
@@ -90,3 +90,7 @@ var IssueFilter = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueFilter;
+
+IssueFilter.propTypes = {
+    setFilter: _propTypes.PropTypes.func.isRequired
+};

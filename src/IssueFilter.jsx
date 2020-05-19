@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types'
 export default class IssueFilter extends React.Component {
     constructor() {
         super();
@@ -10,12 +10,12 @@ export default class IssueFilter extends React.Component {
 
     setFilterOpen(e) {
         e.preventDefault();
-        this.props.setFilter({ status : 'Open'});
+        this.props.setFilter({ status: 'Open' });
     }
 
     setFilterAssigned(e) {
         e.preventDefault();
-        this.props.setFilter({ status : 'Assigned' });
+        this.props.setFilter({ status: 'Assigned' });
     }
 
     clearFilter(e) {
@@ -27,16 +27,15 @@ export default class IssueFilter extends React.Component {
         const Separator = () => <span> | </span>;
         return (
             <div>
-                <Link to="/issues">All Issues</Link>
+                < a href='#' onClick={this.clearFilter}>All Issues</a>
                 <Separator />
-                <Link to="/issues?status=Open">
-                    Open Issues
-                </Link>
+                < a href='#' onClick={this.setFilterOpen}>Open Issues</a>
                 <Separator />
-                <Link to="/issues?status=Assigned">
-                    Assigned Issues
-                </Link>
+                < a href='#' onClick={this.setFilterAssigned}>Assigned Issues</a>
             </div>
         )
     }
+}
+IssueFilter.propTypes = {
+    setFilter: PropTypes.func.isRequired,
 }
