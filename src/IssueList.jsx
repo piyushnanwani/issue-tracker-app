@@ -56,6 +56,7 @@ export default class IssueList extends React.Component {
     componentDidUpdate(prevProps) {
         const oldQuery = prevProps.location.search;
         const newQuery = this.props.location.search;
+        
         if (oldQuery === newQuery)
             return;
         this.loadData();
@@ -63,7 +64,7 @@ export default class IssueList extends React.Component {
     }
 
     loadData() {
-        fetch(`/api/issues${this.props.location.search}`).then(response => {
+        fetch(`/api/issues${this.props.location.search} `).then(response => {
             if (response.ok) {
                 response.json()
                     .then(data => {
@@ -110,7 +111,24 @@ export default class IssueList extends React.Component {
         });
     }
     setFilter(query){
-        this.props.router.push({pathname: this.props.location.pathname, query});
+        this.props.history.push({pathname: this.props.location.pathname, query});
+        // this.history.push({
+        //     pathname: this.props.location.pathname,
+        //     status: query
+        // })
+        // history.pushState(query, 'status', '/issues'); 
+        // ({
+        //     pathname: this.props.location.pathname,
+        //     status: query
+        // })
+        console.log ("setFilter called");
+        
+        // if(query.status="Assigned")
+            this.loadData();
+        // console.log(this.props.router);
+        // console.log("Heyy baby!");
+        // console.log(this.props.location.pathname);
+        // console.log(query);
     }
     render() {
         return (

@@ -164,6 +164,7 @@ var IssueList = function (_React$Component) {
         value: function componentDidUpdate(prevProps) {
             var oldQuery = prevProps.location.search;
             var newQuery = this.props.location.search;
+
             if (oldQuery === newQuery) return;
             this.loadData();
         }
@@ -172,7 +173,7 @@ var IssueList = function (_React$Component) {
         value: function loadData() {
             var _this2 = this;
 
-            fetch('/api/issues' + this.props.location.search).then(function (response) {
+            fetch('/api/issues' + this.props.location.search + ' ').then(function (response) {
                 if (response.ok) {
                     response.json().then(function (data) {
                         console.log("Total count of records:", data._metadata.total_count);
@@ -221,7 +222,24 @@ var IssueList = function (_React$Component) {
     }, {
         key: 'setFilter',
         value: function setFilter(query) {
-            this.props.router.push({ pathname: this.props.location.pathname, query: query });
+            this.props.history.push({ pathname: this.props.location.pathname, query: query });
+            // this.history.push({
+            //     pathname: this.props.location.pathname,
+            //     status: query
+            // })
+            // history.pushState(query, 'status', '/issues'); 
+            // ({
+            //     pathname: this.props.location.pathname,
+            //     status: query
+            // })
+            console.log("setFilter called");
+
+            // if(query.status="Assigned")
+            this.loadData();
+            // console.log(this.props.router);
+            // console.log("Heyy baby!");
+            // console.log(this.props.location.pathname);
+            // console.log(query);
         }
     }, {
         key: 'render',

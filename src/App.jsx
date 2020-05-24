@@ -36,15 +36,17 @@ const RoutedApp = () => (
 
         <Switch>
             <App>
-                    <Route exact path="/issues" component={withRouter(IssueList)} />
-                    <Route exact path="/issues/:id" component={IssueEdit} />
+                    <Switch>
+                        <Route exact path="/issues" component={ withRouter(IssueList) } />
+                        <Route exact path="/issues/:id" component={IssueEdit} />
+                    </Switch>
             </App>
             <Route path="/404" component={NoMatch} />
-            <Redirect to="/404" />
+            {/* <Redirect to="/404" /> */}
 
-        </Switch>
+         </Switch>
 
-    </BrowserRouter>
+     </BrowserRouter>
 );
 
 ReactDOM.render(<RoutedApp />, contentNode);

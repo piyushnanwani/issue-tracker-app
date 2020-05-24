@@ -24,6 +24,9 @@ app.get('/api/issues', (req,res)=> {
     const filter = {};
     if(req.query.status)
         filter.status = req.query.status;
+
+    console.log(req);
+    
     db.collection('issues').find(filter).toArray().then(issues=>{
         const metadata = {total_count: issues.length};
         res.json({_metadata: metadata, records:issues});

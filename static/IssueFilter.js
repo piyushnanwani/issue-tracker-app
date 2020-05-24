@@ -12,6 +12,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _propTypes = require('prop-types');
 
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,33 +28,10 @@ var IssueFilter = function (_React$Component) {
     function IssueFilter() {
         _classCallCheck(this, IssueFilter);
 
-        var _this = _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).call(this));
-
-        _this.clearFilter = _this.clearFilter.bind(_this);
-        _this.setFilterOpen = _this.setFilterOpen.bind(_this);
-        _this.setFilterAssigned = _this.setFilterAssigned.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).call(this));
     }
 
     _createClass(IssueFilter, [{
-        key: 'setFilterOpen',
-        value: function setFilterOpen(e) {
-            e.preventDefault();
-            this.props.setFilter({ status: 'Open' });
-        }
-    }, {
-        key: 'setFilterAssigned',
-        value: function setFilterAssigned(e) {
-            e.preventDefault();
-            this.props.setFilter({ status: 'Assigned' });
-        }
-    }, {
-        key: 'clearFilter',
-        value: function clearFilter(e) {
-            e.preventDefault();
-            this.props.setFilter();
-        }
-    }, {
         key: 'render',
         value: function render() {
             var Separator = function Separator() {
@@ -66,20 +45,20 @@ var IssueFilter = function (_React$Component) {
                 'div',
                 null,
                 _react2.default.createElement(
-                    'a',
-                    { href: '#', onClick: this.clearFilter },
-                    'All Issues'
+                    _reactRouterDom.Link,
+                    { to: '/issues' },
+                    'All Issues '
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
-                    'a',
-                    { href: '#', onClick: this.setFilterOpen },
-                    'Open Issues'
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Open' },
+                    'Open Issues '
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
-                    'a',
-                    { href: '#', onClick: this.setFilterAssigned },
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Assigned' },
                     'Assigned Issues'
                 )
             );
@@ -90,7 +69,3 @@ var IssueFilter = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueFilter;
-
-IssueFilter.propTypes = {
-    setFilter: _propTypes.PropTypes.func.isRequired
-};

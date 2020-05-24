@@ -33576,11 +33576,14 @@ var RoutedApp = function RoutedApp() {
             _react2.default.createElement(
                 App,
                 null,
-                _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues', component: (0, _reactRouterDom.withRouter)(_IssueList2.default) }),
-                _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default })
+                _react2.default.createElement(
+                    _reactRouter.Switch,
+                    null,
+                    _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues', component: (0, _reactRouterDom.withRouter)(_IssueList2.default) }),
+                    _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/issues/:id', component: _IssueEdit2.default })
+                )
             ),
-            _react2.default.createElement(_reactRouter.Route, { path: '/404', component: NoMatch }),
-            _react2.default.createElement(_reactRouter.Redirect, { to: '/404' })
+            _react2.default.createElement(_reactRouter.Route, { path: '/404', component: NoMatch })
         )
     );
 };
@@ -33722,7 +33725,7 @@ exports.default = IssueEdit;
 
 
 IssueEdit.propTypes = {
-    id: _propTypes2.default.object.isRequired
+    id: _propTypes2.default.object
 };
 },{"prop-types":15,"react":31,"react-router-dom":25}],50:[function(require,module,exports){
 'use strict';
@@ -33739,6 +33742,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _propTypes = require('prop-types');
 
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33753,33 +33758,10 @@ var IssueFilter = function (_React$Component) {
     function IssueFilter() {
         _classCallCheck(this, IssueFilter);
 
-        var _this = _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).call(this));
-
-        _this.clearFilter = _this.clearFilter.bind(_this);
-        _this.setFilterOpen = _this.setFilterOpen.bind(_this);
-        _this.setFilterAssigned = _this.setFilterAssigned.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (IssueFilter.__proto__ || Object.getPrototypeOf(IssueFilter)).call(this));
     }
 
     _createClass(IssueFilter, [{
-        key: 'setFilterOpen',
-        value: function setFilterOpen(e) {
-            e.preventDefault();
-            this.props.setFilter({ status: 'Open' });
-        }
-    }, {
-        key: 'setFilterAssigned',
-        value: function setFilterAssigned(e) {
-            e.preventDefault();
-            this.props.setFilter({ status: 'Assigned' });
-        }
-    }, {
-        key: 'clearFilter',
-        value: function clearFilter(e) {
-            e.preventDefault();
-            this.props.setFilter();
-        }
-    }, {
         key: 'render',
         value: function render() {
             var Separator = function Separator() {
@@ -33793,20 +33775,20 @@ var IssueFilter = function (_React$Component) {
                 'div',
                 null,
                 _react2.default.createElement(
-                    'a',
-                    { href: '#', onClick: this.clearFilter },
-                    'All Issues'
+                    _reactRouterDom.Link,
+                    { to: '/issues' },
+                    'All Issues '
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
-                    'a',
-                    { href: '#', onClick: this.setFilterOpen },
-                    'Open Issues'
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Open' },
+                    'Open Issues '
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
-                    'a',
-                    { href: '#', onClick: this.setFilterAssigned },
+                    _reactRouterDom.Link,
+                    { to: '/issues?status=Assigned' },
                     'Assigned Issues'
                 )
             );
@@ -33817,11 +33799,7 @@ var IssueFilter = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueFilter;
-
-IssueFilter.propTypes = {
-    setFilter: _propTypes.PropTypes.func.isRequired
-};
-},{"prop-types":15,"react":31}],51:[function(require,module,exports){
+},{"prop-types":15,"react":31,"react-router-dom":25}],51:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33988,6 +33966,7 @@ var IssueList = function (_React$Component) {
         value: function componentDidUpdate(prevProps) {
             var oldQuery = prevProps.location.search;
             var newQuery = this.props.location.search;
+
             if (oldQuery === newQuery) return;
             this.loadData();
         }
@@ -33996,7 +33975,7 @@ var IssueList = function (_React$Component) {
         value: function loadData() {
             var _this2 = this;
 
-            fetch('/api/issues' + this.props.location.search).then(function (response) {
+            fetch('/api/issues' + this.props.location.search + ' ').then(function (response) {
                 if (response.ok) {
                     response.json().then(function (data) {
                         console.log("Total count of records:", data._metadata.total_count);
@@ -34045,7 +34024,24 @@ var IssueList = function (_React$Component) {
     }, {
         key: 'setFilter',
         value: function setFilter(query) {
-            this.props.router.push({ pathname: this.props.location.pathname, query: query });
+            this.props.history.push({ pathname: this.props.location.pathname, query: query });
+            // this.history.push({
+            //     pathname: this.props.location.pathname,
+            //     status: query
+            // })
+            // history.pushState(query, 'status', '/issues'); 
+            // ({
+            //     pathname: this.props.location.pathname,
+            //     status: query
+            // })
+            console.log("setFilter called");
+
+            // if(query.status="Assigned")
+            this.loadData();
+            // console.log(this.props.router);
+            // console.log("Heyy baby!");
+            // console.log(this.props.location.pathname);
+            // console.log(query);
         }
     }, {
         key: 'render',

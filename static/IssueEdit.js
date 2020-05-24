@@ -61,5 +61,5 @@ exports.default = IssueEdit;
 
 
 IssueEdit.propTypes = {
-    id: _propTypes2.default.object.isRequired
+    id: _propTypes2.default.object
 };
