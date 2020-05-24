@@ -123,7 +123,7 @@ function IssueTable(props) {
                 _react2.default.createElement(
                     'th',
                     null,
-                    'Complettion Date'
+                    'Completion Date'
                 ),
                 _react2.default.createElement(
                     'th',

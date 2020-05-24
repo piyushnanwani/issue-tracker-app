@@ -31,7 +31,7 @@ function IssueTable(props) {
                     <th>Owner</th>
                     <th>Created</th>
                     <th>Effort</th>
-                    <th>Complettion Date</th>
+                    <th>Completion Date</th>
                     <th>Title</th>
                 </tr>
             </thead>
