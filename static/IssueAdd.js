@@ -49,16 +49,49 @@ var IssueAdd = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 "div",
-                null,
+                { className: "container", id: "events" },
                 _react2.default.createElement(
-                    "form",
-                    { name: "IssueAdd", onSubmit: this.handleSubmit },
-                    _react2.default.createElement("input", { type: "text", name: "owner", placeholder: "Owner" }),
-                    _react2.default.createElement("input", { type: "text", name: "title", placeholder: "Title" }),
+                    "div",
+                    { className: "row" },
                     _react2.default.createElement(
-                        "button",
-                        null,
-                        "Add"
+                        "div",
+                        { className: "panel panel-default" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "panel-heading", style: { width: "500px", border: "none" } },
+                            _react2.default.createElement(
+                                "h3",
+                                null,
+                                "Add an Event"
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "container" },
+                    _react2.default.createElement(
+                        "form",
+                        { name: "IssueAdd", onSubmit: this.handleSubmit },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row", style: { marginTop: "5px" } },
+                            _react2.default.createElement("input", { type: "text", name: "owner", placeholder: "Owner" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row", style: { marginTop: "5px" } },
+                            _react2.default.createElement("input", { type: "text", name: "title", placeholder: "Title" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row", style: { marginTop: "5px" } },
+                            _react2.default.createElement(
+                                "button",
+                                { className: "btn btn-primary" },
+                                "Add"
+                            )
+                        )
                     )
                 )
             );

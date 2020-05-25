@@ -45,21 +45,21 @@ var App = function App(props) {
         null,
         _react2.default.createElement(
             'div',
-            { className: 'header' },
+            null,
             _react2.default.createElement(
                 'h1',
-                null,
+                { className: 'jumbotron', style: { marginTop: "0px", height: "5px" } },
                 'Issue Tracker'
             )
         ),
         _react2.default.createElement(
             'div',
-            { className: 'contents' },
+            { className: 'container', style: { marginLeft: '0px' } },
             props.children
         ),
         _react2.default.createElement(
             'div',
-            { className: 'footer' },
+            { className: 'panel-footer', style: { marginTop: '100px', fontFamily: 'Helvetics', fontSize: '14px' } },
             'Full source code available at this ',
             _react2.default.createElement(
                 'a',

@@ -223,12 +223,26 @@ var IssueList = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
-                _react2.default.createElement(_IssueFilter2.default, null),
-                _react2.default.createElement('hr', null),
-                _react2.default.createElement(IssueTable, { issues: this.state.issues }),
-                _react2.default.createElement('hr', null),
-                _react2.default.createElement(_IssueAdd2.default, { createIssue: this.createIssue })
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(_IssueFilter2.default, null)
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-8' },
+                        _react2.default.createElement(IssueTable, { issues: this.state.issues })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-4' },
+                        _react2.default.createElement(_IssueAdd2.default, { createIssue: this.createIssue })
+                    )
+                )
             );
         }
     }]);

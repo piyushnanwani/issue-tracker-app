@@ -33538,21 +33538,21 @@ var App = function App(props) {
         null,
         _react2.default.createElement(
             'div',
-            { className: 'header' },
+            null,
             _react2.default.createElement(
                 'h1',
-                null,
+                { className: 'jumbotron', style: { marginTop: "0px", height: "5px" } },
                 'Issue Tracker'
             )
         ),
         _react2.default.createElement(
             'div',
-            { className: 'contents' },
+            { className: 'container', style: { marginLeft: '0px' } },
             props.children
         ),
         _react2.default.createElement(
             'div',
-            { className: 'footer' },
+            { className: 'panel-footer', style: { marginTop: '100px', fontFamily: 'Helvetics', fontSize: '14px' } },
             'Full source code available at this ',
             _react2.default.createElement(
                 'a',
@@ -33641,16 +33641,49 @@ var IssueAdd = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 "div",
-                null,
+                { className: "container", id: "events" },
                 _react2.default.createElement(
-                    "form",
-                    { name: "IssueAdd", onSubmit: this.handleSubmit },
-                    _react2.default.createElement("input", { type: "text", name: "owner", placeholder: "Owner" }),
-                    _react2.default.createElement("input", { type: "text", name: "title", placeholder: "Title" }),
+                    "div",
+                    { className: "row" },
                     _react2.default.createElement(
-                        "button",
-                        null,
-                        "Add"
+                        "div",
+                        { className: "panel panel-default" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "panel-heading", style: { width: "500px", border: "none" } },
+                            _react2.default.createElement(
+                                "h3",
+                                null,
+                                "Add an Event"
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "container" },
+                    _react2.default.createElement(
+                        "form",
+                        { name: "IssueAdd", onSubmit: this.handleSubmit },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row", style: { marginTop: "5px" } },
+                            _react2.default.createElement("input", { type: "text", name: "owner", placeholder: "Owner" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row", style: { marginTop: "5px" } },
+                            _react2.default.createElement("input", { type: "text", name: "title", placeholder: "Title" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row", style: { marginTop: "5px" } },
+                            _react2.default.createElement(
+                                "button",
+                                { className: "btn btn-primary" },
+                                "Add"
+                            )
+                        )
                     )
                 )
             );
@@ -33707,7 +33740,12 @@ var IssueEdit = function (_React$Component) {
                     'p',
                     null,
                     'This is a placeholder for the editing issue',
-                    this.props.match.params.id
+                    _react2.default.createElement(
+                        'b',
+                        null,
+                        ' ',
+                        this.props.match.params.id
+                    )
                 ),
                 _react2.default.createElement(
                     _reactRouterDom.Link,
@@ -33764,32 +33802,52 @@ var IssueFilter = function (_React$Component) {
     _createClass(IssueFilter, [{
         key: 'render',
         value: function render() {
-            var Separator = function Separator() {
-                return _react2.default.createElement(
-                    'span',
-                    null,
-                    ' | '
-                );
-            };
             return _react2.default.createElement(
-                'div',
-                null,
+                'nav',
+                { className: 'navbar navbar-default' },
                 _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues' },
-                    'All Issues '
-                ),
-                _react2.default.createElement(Separator, null),
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues?status=Open' },
-                    'Open Issues '
-                ),
-                _react2.default.createElement(Separator, null),
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues?status=Assigned' },
-                    'Assigned Issues'
+                    'div',
+                    { className: 'container-fluid' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'navbar-header' },
+                        _react2.default.createElement(
+                            'a',
+                            { className: 'navbar-brand', href: '#' },
+                            'Select Filter'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'ul',
+                        { className: 'nav navbar-nav' },
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'active' },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/issues' },
+                                'All Issues '
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/issues?status=Open' },
+                                'Open Issues '
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/issues?status=Assigned' },
+                                'Assigned Issues'
+                            )
+                        )
+                    )
                 )
             );
         }
@@ -33925,7 +33983,7 @@ function IssueTable(props) {
                 _react2.default.createElement(
                     'th',
                     null,
-                    'Complettion Date'
+                    'Completion Date'
                 ),
                 _react2.default.createElement(
                     'th',
@@ -34025,12 +34083,26 @@ var IssueList = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
-                _react2.default.createElement(_IssueFilter2.default, null),
-                _react2.default.createElement('hr', null),
-                _react2.default.createElement(IssueTable, { issues: this.state.issues }),
-                _react2.default.createElement('hr', null),
-                _react2.default.createElement(_IssueAdd2.default, { createIssue: this.createIssue })
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(_IssueFilter2.default, null)
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-8' },
+                        _react2.default.createElement(IssueTable, { issues: this.state.issues })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-4' },
+                        _react2.default.createElement(_IssueAdd2.default, { createIssue: this.createIssue })
+                    )
+                )
             );
         }
     }]);

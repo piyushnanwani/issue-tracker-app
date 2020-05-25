@@ -8,17 +8,32 @@ export default class IssueFilter extends React.Component {
 
 
     render() {
-        const Separator = () => <span> | </span>;
         return (
-            <div>
-                <Link to="/issues">All Issues </Link> 
-                <Separator />
-                <Link to="/issues?status=Open">Open Issues </Link> 
-                <Separator />
-                <Link to="/issues?status=Assigned">
-                    Assigned Issues
-                </Link> 
-            </div>
+            <nav className="navbar navbar-default">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="#">Select Filter</a>
+                    </div>
+                    <ul className="nav navbar-nav">
+                        <li className="active">
+                            
+                            <Link to="/issues">All Issues </Link> 
+                            
+                        </li>
+                        
+                        <li>
+                            <Link to="/issues?status=Open">Open Issues </Link> 
+                        </li>
+                        
+                        <li>
+                            <Link to="/issues?status=Assigned">
+                                Assigned Issues
+                            </Link> 
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
         )
     }
 }

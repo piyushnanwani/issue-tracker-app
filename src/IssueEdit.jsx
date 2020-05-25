@@ -9,7 +9,7 @@ export default class IssueEdit extends React.Component
             <div> 
                 <p>
                 This is a placeholder for the editing issue
-                {this.props.match.params.id}
+                <b> {this.props.match.params.id}</b>
                 </p>
                 <Link to="/issues">back to issue list</Link>
             </div>

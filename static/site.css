@@ -1,0 +1,32 @@
+h1, h2 {
+    text-align: center;
+}
+
+.jumbotron {
+    background-color: #e5e4e6;
+    color: rgb(87, 77, 77);
+}
+
+
+
+table.bordered-table th, td{
+    border: 1px solid silver; padding: 4px;
+}    
+table.bordered-table {
+    border-collapse: collapse;
+    background-color: #FFF;
+}    
+
+body {
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+}    
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    .body-content {
+        padding: 0;
+    }    
+}    
+

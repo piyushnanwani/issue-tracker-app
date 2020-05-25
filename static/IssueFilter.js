@@ -34,32 +34,52 @@ var IssueFilter = function (_React$Component) {
     _createClass(IssueFilter, [{
         key: 'render',
         value: function render() {
-            var Separator = function Separator() {
-                return _react2.default.createElement(
-                    'span',
-                    null,
-                    ' | '
-                );
-            };
             return _react2.default.createElement(
-                'div',
-                null,
+                'nav',
+                { className: 'navbar navbar-default' },
                 _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues' },
-                    'All Issues '
-                ),
-                _react2.default.createElement(Separator, null),
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues?status=Open' },
-                    'Open Issues '
-                ),
-                _react2.default.createElement(Separator, null),
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues?status=Assigned' },
-                    'Assigned Issues'
+                    'div',
+                    { className: 'container-fluid' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'navbar-header' },
+                        _react2.default.createElement(
+                            'a',
+                            { className: 'navbar-brand', href: '#' },
+                            'Select Filter'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'ul',
+                        { className: 'nav navbar-nav' },
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'active' },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/issues' },
+                                'All Issues '
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/issues?status=Open' },
+                                'Open Issues '
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/issues?status=Assigned' },
+                                'Assigned Issues'
+                            )
+                        )
+                    )
                 )
             );
         }

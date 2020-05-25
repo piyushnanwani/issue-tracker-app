@@ -43,7 +43,12 @@ var IssueEdit = function (_React$Component) {
                     'p',
                     null,
                     'This is a placeholder for the editing issue',
-                    this.props.match.params.id
+                    _react2.default.createElement(
+                        'b',
+                        null,
+                        ' ',
+                        this.props.match.params.id
+                    )
                 ),
                 _react2.default.createElement(
                     _reactRouterDom.Link,

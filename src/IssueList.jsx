@@ -112,12 +112,18 @@ export default class IssueList extends React.Component {
 
     render() {
         return (
-            <div>
-                <IssueFilter />
-                <hr />
-                <IssueTable issues={this.state.issues} />
-                <hr />
-                <IssueAdd createIssue={this.createIssue} />
+            <div className="container">
+                <div className="row">
+                    <IssueFilter />
+                </div>
+                <div className="row">
+                    <div className="col-sm-8">
+                        <IssueTable issues={this.state.issues} />
+                    </div>
+                    <div className="col-sm-4">
+                        <IssueAdd createIssue={this.createIssue} />
+                    </div>
+                </div>
             </div>
         );
     }

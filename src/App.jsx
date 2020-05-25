@@ -14,13 +14,13 @@ const NoMatch = () => <p>Page Not Found</p>;
 
 const App = (props) => (
     <div>
-        <div className="header">
-            <h1>Issue Tracker</h1>
+        <div >
+            <h1 className="jumbotron" style= {{marginTop:"0px", height:"5px"}}  >Issue Tracker</h1>
         </div>
-        <div className="contents">
+        <div className="container" style={{marginLeft:'0px'}}>
             {props.children}
         </div>
-        <div className="footer">
+        <div className="panel-footer" style={{ marginTop: '100px', fontFamily : 'Helvetics', fontSize: '14px' }}>
             Full source code available at this <a href="https://github.com/piyushnanwani/issue-tracker-app">
                 Github repository
             </a>
