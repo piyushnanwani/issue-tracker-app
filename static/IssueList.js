@@ -35,6 +35,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var IssueRow = function IssueRow(props) {
+    function onDeleteClick() {
+        props.deleteIssue(props.issue._id);
+    }
     return _react2.default.createElement(
         'tr',
         null,
@@ -78,13 +81,23 @@ var IssueRow = function IssueRow(props) {
             'td',
             null,
             props.issue.title
+        ),
+        _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(
+                'button',
+                { className: 'btn btn-danger', style: { fontSize: "12px", margin: "3px" }, onClick: onDeleteClick },
+                'Delete'
+            ),
+            ' '
         )
     );
 };
 
 function IssueTable(props) {
     var issueRows = props.issues.map(function (issue) {
-        return _react2.default.createElement(IssueRow, { key: issue._id, issue: issue });
+        return _react2.default.createElement(IssueRow, { key: issue._id, issue: issue, deleteIssue: props.deleteIssue });
     });
     return _react2.default.createElement(
         'table',
@@ -129,6 +142,11 @@ function IssueTable(props) {
                     'th',
                     null,
                     'Title'
+                ),
+                _react2.default.createElement(
+                    'th',
+                    null,
+                    'Delete Issue'
                 )
             )
         ),
@@ -140,6 +158,11 @@ function IssueTable(props) {
     );
 }
 
+IssueTable.propTypes = {
+    issues: _propTypes2.default.array.isRequired,
+    deleteIssue: _propTypes2.default.func.isRequired
+};
+
 var IssueList = function (_React$Component) {
     _inherits(IssueList, _React$Component);
 
@@ -150,6 +173,7 @@ var IssueList = function (_React$Component) {
 
         _this.state = { issues: [] };
         _this.createIssue = _this.createIssue.bind(_this);
+        _this.deleteIssue = _this.deleteIssue.bind(_this);
         return _this;
     }
 
@@ -219,6 +243,15 @@ var IssueList = function (_React$Component) {
             });
         }
     }, {
+        key: 'deleteIssue',
+        value: function deleteIssue(id) {
+            var _this4 = this;
+
+            fetch('/api/issues/' + id, { method: 'DELETE' }).then(function (response) {
+                if (!response.ok) alert('Failed to delete issue');else _this4.loadData();
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -235,7 +268,7 @@ var IssueList = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-8' },
-                        _react2.default.createElement(IssueTable, { issues: this.state.issues })
+                        _react2.default.createElement(IssueTable, { issues: this.state.issues, deleteIssue: this.deleteIssue })
                     ),
                     _react2.default.createElement(
                         'div',
