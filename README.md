@@ -7,6 +7,5 @@
 2) navigate into project repository
 3) `npm install` 
 4) create a new db and document in MongoDB and  initialisng the document by running following command :
-
   `mongo scripts/init.mongo.js`  
 5) `npm start`
