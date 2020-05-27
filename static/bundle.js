@@ -33727,30 +33727,131 @@ var IssueEdit = function (_React$Component) {
     function IssueEdit() {
         _classCallCheck(this, IssueEdit);
 
-        return _possibleConstructorReturn(this, (IssueEdit.__proto__ || Object.getPrototypeOf(IssueEdit)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (IssueEdit.__proto__ || Object.getPrototypeOf(IssueEdit)).call(this));
+
+        _this.state = {
+            issue: {
+                _id: '', title: '', status: '', owner: '', effort: '',
+                completionDate: '', created: ''
+            }
+        };
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
     }
 
     _createClass(IssueEdit, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.loadData();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.id != this.props.id) {
+                this.loadData();
+            }
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(event) {
+            var issue = Object.assign({}, this.state.issue);
+            issue[event.target.name] = event.target.value;
+            this.setState({ issue: issue });
+        }
+    }, {
+        key: 'loadData',
+        value: function loadData() {
+            var _this2 = this;
+
+            console.log(this.props.match.params.id);
+            fetch('/api/issues/' + this.props.match.params.id).then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (issue) {
+                        issue.created = new Date(issue.created).toString();
+                        issue.completionDate = issue.completionDate != null ? new Date(issue.completionDate) : '';
+                        issue.effort = issue.effort != null ? issue.effort.toString() : '';
+                        _this2.setState(issue);
+                    });
+                } else {
+                    response.json().then(function (error) {
+                        alert('Failed to fetch issue: ' + error.message);
+                    });
+                }
+            }).catch(function (err) {
+                alert('Error in fetching data from server: ' + err.message);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var issue = this.state.issue;
             return _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(
-                    'p',
+                    'form',
                     null,
-                    'This is a placeholder for the editing issue',
+                    'ID: ',
+                    issue._id,
+                    _react2.default.createElement('br', null),
+                    'Created: ',
+                    issue.created,
+                    _react2.default.createElement('br', null),
+                    'Status: ',
                     _react2.default.createElement(
-                        'b',
-                        null,
-                        ' ',
-                        this.props.match.params.id
+                        'select',
+                        { name: 'status', value: issue.status, onChange: this.onChange },
+                        _react2.default.createElement(
+                            'option',
+                            { value: 'New' },
+                            'New'
+                        ),
+                        _react2.default.createElement(
+                            'option',
+                            { value: 'Open' },
+                            'Open'
+                        ),
+                        _react2.default.createElement(
+                            'option',
+                            { value: 'Assigned' },
+                            'Assigned'
+                        ),
+                        _react2.default.createElement(
+                            'option',
+                            { value: 'Fixed' },
+                            'Fixed'
+                        ),
+                        _react2.default.createElement(
+                            'option',
+                            { value: 'Verified' },
+                            'Verified'
+                        ),
+                        _react2.default.createElement(
+                            'option',
+                            { value: 'Closed' },
+                            'Closed'
+                        )
+                    ),
+                    _react2.default.createElement('br', null),
+                    'Owner: ',
+                    _react2.default.createElement('input', { name: 'owner', value: issue.owner, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    'Effort: ',
+                    _react2.default.createElement('input', { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    'Title: ',
+                    _react2.default.createElement('input', { name: 'title', size: 50, value: issue.title, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'submit' },
+                        'Submit'
+                    ),
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/issues' },
+                        ' Back to issue list'
                     )
-                ),
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: '/issues' },
-                    'back to issue list'
                 )
             );
         }
@@ -33763,7 +33864,7 @@ exports.default = IssueEdit;
 
 
 IssueEdit.propTypes = {
-    id: _propTypes2.default.object
+    params: _propTypes2.default.object
 };
 },{"prop-types":15,"react":31,"react-router-dom":25}],50:[function(require,module,exports){
 'use strict';
