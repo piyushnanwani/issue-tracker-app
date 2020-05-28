@@ -20,6 +20,10 @@ var _NumInput = require('./NumInput');
 
 var _NumInput2 = _interopRequireDefault(_NumInput);
 
+var _DateInput = require('./DateInput');
+
+var _DateInput2 = _interopRequireDefault(_DateInput);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40,9 +44,11 @@ var IssueEdit = function (_React$Component) {
             issue: {
                 _id: '', title: '', status: '', owner: '', effort: null,
                 completionDate: '', created: ''
-            }
+            },
+            invalidFields: {}
         };
         _this.onChange = _this.onChange.bind(_this);
+        _this.onValidityChange = _this.onValidityChange.bind(_this);
         return _this;
     }
 
@@ -88,9 +94,26 @@ var IssueEdit = function (_React$Component) {
             });
         }
     }, {
+        key: 'onValidityChange',
+        value: function onValidityChange(event, valid) {
+            var invalidFields = Object.assign({}, this.state.invalidFields);
+
+            if (!valid) {
+                invalidFields[event.target.value] = true;
+            } else {
+                delete invalidFields[event.target.value];
+            }
+            this.setState({ invalidFields: invalidFields });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var issue = this.state.issue;
+            var validationMessage = Object.keys(this.state.invalidFields).length === 0 ? null : _react2.default.createElement(
+                'div',
+                { className: 'error' },
+                'Please correct invalid fields before submitting'
+            );
             return _react2.default.createElement(
                 'div',
                 null,
@@ -146,10 +169,13 @@ var IssueEdit = function (_React$Component) {
                     _react2.default.createElement(_NumInput2.default, { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
                     _react2.default.createElement('br', null),
                     'Completion Date ',
-                    _react2.default.createElement('input', { name: 'completionDate', value: this.completionDate, onChange: this.onChange }),
+                    _react2.default.createElement(_DateInput2.default, { name: 'completionDate', value: this.completionDate,
+                        onChange: this.onChange, onValidityChange: this.onValidityChange }),
                     _react2.default.createElement('br', null),
                     'Title: ',
                     _react2.default.createElement('input', { name: 'title', size: 50, value: issue.title, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    validationMessage,
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',

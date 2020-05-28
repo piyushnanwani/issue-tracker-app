@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import NumInput from './NumInput'
+import DateInput from './DateInput';
 
 export default class IssueEdit extends React.Component
 { 
@@ -12,8 +13,10 @@ export default class IssueEdit extends React.Component
                 _id: '', title:'', status: '', owner:'', effort:null,
                 completionDate:'', created:''
             },
+            invalidFields: {}
         };
         this.onChange = this.onChange.bind(this);
+        this.onValidityChange = this.onValidityChange.bind(this);
     }
 
     componentDidMount() {
@@ -51,8 +54,22 @@ export default class IssueEdit extends React.Component
         });
     }
 
+    onValidityChange(event, valid) {
+        const invalidFields = Object.assign({}, this.state.invalidFields);
+
+        if(!valid) {
+            invalidFields[event.target.value] = true;
+        } else {
+            delete invalidFields[event.target.value];
+        }
+        this.setState({ invalidFields });
+    }
+
     render(){
         const issue = this.state.issue;
+        const validationMessage = Object.keys(this.state.invalidFields).length
+        === 0 ? null : (<div className="error">Please correct invalid fields 
+        before submitting</div>);
         return (
             <div>
                 <form>
@@ -73,9 +90,12 @@ export default class IssueEdit extends React.Component
                     <br/>
                     Effort: <NumInput size={5} name="effort" value={issue.effort} onChange={this.onChange} />
                     <br/>
-                    Completion Date <input name="completionDate" value={this.completionDate} onChange={this.onChange} />
+                    Completion Date <DateInput name="completionDate" value={this.completionDate} 
+                    onChange={this.onChange} onValidityChange={this.onValidityChange} />
                     <br/>
                     Title: <input name="title" size={50} value={issue.title} onChange={this.onChange} />
+                    <br/>
+                    {validationMessage}
                     <br/>
                     <button type="submit">Submit</button>
                     <Link to="/issues"> Back to issue list</Link>
