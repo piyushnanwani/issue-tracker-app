@@ -72,6 +72,8 @@ export default class IssueEdit extends React.Component
                     <br/>
                     Effort: <input size={5} name="effort" value={issue.effort} onChange={this.onChange} />
                     <br/>
+                    Completion Date <input name="completionDate" value={this.completionDate} onChange={this.onChange} />
+                    <br/>
                     Title: <input name="title" size={50} value={issue.title} onChange={this.onChange} />
                     <br/>
                     <button type="submit">Submit</button>

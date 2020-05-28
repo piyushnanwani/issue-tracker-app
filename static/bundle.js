@@ -33747,7 +33747,7 @@ var IssueEdit = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps) {
-            if (prevProps.id != this.props.id) {
+            if (prevProps.match.params.id != this.props.match.params.id) {
                 this.loadData();
             }
         }
@@ -33763,7 +33763,6 @@ var IssueEdit = function (_React$Component) {
         value: function loadData() {
             var _this2 = this;
 
-            console.log(this.props.match.params.id);
             fetch('/api/issues/' + this.props.match.params.id).then(function (response) {
                 if (response.ok) {
                     response.json().then(function (issue) {
@@ -33838,6 +33837,9 @@ var IssueEdit = function (_React$Component) {
                     _react2.default.createElement('br', null),
                     'Effort: ',
                     _react2.default.createElement('input', { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    'Completion Date ',
+                    _react2.default.createElement('input', { name: 'completionDate', value: this.completionDate, onChange: this.onChange }),
                     _react2.default.createElement('br', null),
                     'Title: ',
                     _react2.default.createElement('input', { name: 'title', size: 50, value: issue.title, onChange: this.onChange }),
