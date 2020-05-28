@@ -30,3 +30,5 @@ body {
     }    
 }    
 
+input.invalid{border-color: red;}
+div.error{color: red;}

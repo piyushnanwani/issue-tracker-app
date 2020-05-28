@@ -16,6 +16,14 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _NumInput = require('./NumInput');
+
+var _NumInput2 = _interopRequireDefault(_NumInput);
+
+var _DateInput = require('./DateInput');
+
+var _DateInput2 = _interopRequireDefault(_DateInput);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34,11 +42,13 @@ var IssueEdit = function (_React$Component) {
 
         _this.state = {
             issue: {
-                _id: '', title: '', status: '', owner: '', effort: '',
+                _id: '', title: '', status: '', owner: '', effort: null,
                 completionDate: '', created: ''
-            }
+            },
+            invalidFields: {}
         };
         _this.onChange = _this.onChange.bind(_this);
+        _this.onValidityChange = _this.onValidityChange.bind(_this);
         return _this;
     }
 
@@ -56,9 +66,10 @@ var IssueEdit = function (_React$Component) {
         }
     }, {
         key: 'onChange',
-        value: function onChange(event) {
+        value: function onChange(event, convertedValue) {
             var issue = Object.assign({}, this.state.issue);
-            issue[event.target.name] = event.target.value;
+            var value = convertedValue !== undefined ? convertedValue : event.target.value;
+            issue[event.target.name] = value;
             this.setState({ issue: issue });
         }
     }, {
@@ -71,7 +82,6 @@ var IssueEdit = function (_React$Component) {
                     response.json().then(function (issue) {
                         issue.created = new Date(issue.created).toString();
                         issue.completionDate = issue.completionDate != null ? new Date(issue.completionDate) : '';
-                        issue.effort = issue.effort != null ? issue.effort.toString() : '';
                         _this2.setState(issue);
                     });
                 } else {
@@ -84,9 +94,26 @@ var IssueEdit = function (_React$Component) {
             });
         }
     }, {
+        key: 'onValidityChange',
+        value: function onValidityChange(event, valid) {
+            var invalidFields = Object.assign({}, this.state.invalidFields);
+
+            if (!valid) {
+                invalidFields[event.target.value] = true;
+            } else {
+                delete invalidFields[event.target.value];
+            }
+            this.setState({ invalidFields: invalidFields });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var issue = this.state.issue;
+            var validationMessage = Object.keys(this.state.invalidFields).length === 0 ? null : _react2.default.createElement(
+                'div',
+                { className: 'error' },
+                'Please correct invalid fields before submitting'
+            );
             return _react2.default.createElement(
                 'div',
                 null,
@@ -139,10 +166,16 @@ var IssueEdit = function (_React$Component) {
                     _react2.default.createElement('input', { name: 'owner', value: issue.owner, onChange: this.onChange }),
                     _react2.default.createElement('br', null),
                     'Effort: ',
-                    _react2.default.createElement('input', { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
+                    _react2.default.createElement(_NumInput2.default, { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    'Completion Date ',
+                    _react2.default.createElement(_DateInput2.default, { name: 'completionDate', value: this.completionDate,
+                        onChange: this.onChange, onValidityChange: this.onValidityChange }),
                     _react2.default.createElement('br', null),
                     'Title: ',
                     _react2.default.createElement('input', { name: 'title', size: 50, value: issue.title, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    validationMessage,
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',

@@ -33589,7 +33589,111 @@ var RoutedApp = function RoutedApp() {
 };
 
 _reactDom2.default.render(_react2.default.createElement(RoutedApp, null), contentNode);
-},{"./IssueEdit":49,"./IssueFilter":50,"./IssueList":51,"prop-types":15,"react":31,"react-dom":19,"react-router":28,"react-router-dom":25}],48:[function(require,module,exports){
+},{"./IssueEdit":50,"./IssueFilter":51,"./IssueList":52,"prop-types":15,"react":31,"react-dom":19,"react-router":28,"react-router-dom":25}],48:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DateInput = function (_React$Component) {
+    _inherits(DateInput, _React$Component);
+
+    function DateInput(props) {
+        _classCallCheck(this, DateInput);
+
+        var _this = _possibleConstructorReturn(this, (DateInput.__proto__ || Object.getPrototypeOf(DateInput)).call(this, props));
+
+        _this.state = { value: _this.editFormat(props.value), focused: false, valid: true };
+        _this.onFocus = _this.onFocus.bind(_this);
+        _this.onBlur = _this.onBlur.bind(_this);
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(DateInput, [{
+        key: 'UNSAFE_componentWillReceiveProps',
+        value: function UNSAFE_componentWillReceiveProps(newProps) {
+            if (newProps.value !== this.props.value) {
+                this.setState({ value: this.editFormat(newProps.value) });
+            }
+        }
+    }, {
+        key: 'onFocus',
+        value: function onFocus() {
+            this.setState({ focused: true });
+        }
+    }, {
+        key: 'onBlur',
+        value: function onBlur(e) {
+            var value = this.unformat(this.state.value);
+            var valid = this.state.value === '' || value != null;
+            if (valid !== this.state.valid && this.props.onValidityChange) {
+                this.props.onValidityChange(e, valid);
+            }
+            this.setState({ focused: false, value: value });
+            if (valid) this.props.onChange(e, value);
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(e) {
+            if (e.target.value.match(/^[\d-]*$/)) {
+                this.setState({ value: e.target.value });
+            }
+        }
+    }, {
+        key: 'displayFormat',
+        value: function displayFormat(date) {
+            return date != null ? date.toDateString() : '';
+        }
+    }, {
+        key: 'editFormat',
+        value: function editFormat(date) {
+            return date != null ? date.toDateString() : '';
+        }
+    }, {
+        key: 'unformat',
+        value: function unformat(str) {
+            var val = new Date(str);
+            return isNaN(val.getTime()) ? null : val;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var className = !this.state.valid && !this.state.focused ? 'invalid' : null;
+            var value = this.state.focused || !this.state.valid ? this.state.value : this.displayFormat(this.props.value);
+            return _react2.default.createElement('input', {
+                type: 'text', size: 20, name: this.props.name, className: className,
+                value: value,
+                placeholder: this.state.focused ? 'yyyy-mm-dd' : null,
+                onFocus: this.onFocus, onBlur: this.onBlur, onChange: this.onChange
+            });
+        }
+    }]);
+
+    return DateInput;
+}(_react2.default.Component);
+
+exports.default = DateInput;
+},{"prop-types":15,"react":31}],49:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33694,7 +33798,7 @@ var IssueAdd = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueAdd;
-},{"react":31}],49:[function(require,module,exports){
+},{"react":31}],50:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33712,6 +33816,14 @@ var _reactRouterDom = require('react-router-dom');
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _NumInput = require('./NumInput');
+
+var _NumInput2 = _interopRequireDefault(_NumInput);
+
+var _DateInput = require('./DateInput');
+
+var _DateInput2 = _interopRequireDefault(_DateInput);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33731,11 +33843,13 @@ var IssueEdit = function (_React$Component) {
 
         _this.state = {
             issue: {
-                _id: '', title: '', status: '', owner: '', effort: '',
+                _id: '', title: '', status: '', owner: '', effort: null,
                 completionDate: '', created: ''
-            }
+            },
+            invalidFields: {}
         };
         _this.onChange = _this.onChange.bind(_this);
+        _this.onValidityChange = _this.onValidityChange.bind(_this);
         return _this;
     }
 
@@ -33747,15 +33861,16 @@ var IssueEdit = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps) {
-            if (prevProps.id != this.props.id) {
+            if (prevProps.match.params.id != this.props.match.params.id) {
                 this.loadData();
             }
         }
     }, {
         key: 'onChange',
-        value: function onChange(event) {
+        value: function onChange(event, convertedValue) {
             var issue = Object.assign({}, this.state.issue);
-            issue[event.target.name] = event.target.value;
+            var value = convertedValue !== undefined ? convertedValue : event.target.value;
+            issue[event.target.name] = value;
             this.setState({ issue: issue });
         }
     }, {
@@ -33763,13 +33878,11 @@ var IssueEdit = function (_React$Component) {
         value: function loadData() {
             var _this2 = this;
 
-            console.log(this.props.match.params.id);
             fetch('/api/issues/' + this.props.match.params.id).then(function (response) {
                 if (response.ok) {
                     response.json().then(function (issue) {
                         issue.created = new Date(issue.created).toString();
                         issue.completionDate = issue.completionDate != null ? new Date(issue.completionDate) : '';
-                        issue.effort = issue.effort != null ? issue.effort.toString() : '';
                         _this2.setState(issue);
                     });
                 } else {
@@ -33782,9 +33895,26 @@ var IssueEdit = function (_React$Component) {
             });
         }
     }, {
+        key: 'onValidityChange',
+        value: function onValidityChange(event, valid) {
+            var invalidFields = Object.assign({}, this.state.invalidFields);
+
+            if (!valid) {
+                invalidFields[event.target.value] = true;
+            } else {
+                delete invalidFields[event.target.value];
+            }
+            this.setState({ invalidFields: invalidFields });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var issue = this.state.issue;
+            var validationMessage = Object.keys(this.state.invalidFields).length === 0 ? null : _react2.default.createElement(
+                'div',
+                { className: 'error' },
+                'Please correct invalid fields before submitting'
+            );
             return _react2.default.createElement(
                 'div',
                 null,
@@ -33837,10 +33967,16 @@ var IssueEdit = function (_React$Component) {
                     _react2.default.createElement('input', { name: 'owner', value: issue.owner, onChange: this.onChange }),
                     _react2.default.createElement('br', null),
                     'Effort: ',
-                    _react2.default.createElement('input', { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
+                    _react2.default.createElement(_NumInput2.default, { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    'Completion Date ',
+                    _react2.default.createElement(_DateInput2.default, { name: 'completionDate', value: this.completionDate,
+                        onChange: this.onChange, onValidityChange: this.onValidityChange }),
                     _react2.default.createElement('br', null),
                     'Title: ',
                     _react2.default.createElement('input', { name: 'title', size: 50, value: issue.title, onChange: this.onChange }),
+                    _react2.default.createElement('br', null),
+                    validationMessage,
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
@@ -33866,7 +34002,7 @@ exports.default = IssueEdit;
 IssueEdit.propTypes = {
     params: _propTypes2.default.object
 };
-},{"prop-types":15,"react":31,"react-router-dom":25}],50:[function(require,module,exports){
+},{"./DateInput":48,"./NumInput":53,"prop-types":15,"react":31,"react-router-dom":25}],51:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33958,7 +34094,7 @@ var IssueFilter = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = IssueFilter;
-},{"prop-types":15,"react":31,"react-router-dom":25}],51:[function(require,module,exports){
+},{"prop-types":15,"react":31,"react-router-dom":25}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34249,4 +34385,92 @@ exports.default = IssueList;
 IssueList.propTypes = {
     location: _propTypes2.default.object.isRequired
 };
-},{"./IssueAdd":48,"./IssueFilter":50,"prop-types":15,"react":31,"react-router-dom":25,"whatwg-fetch":46}]},{},[47]);
+},{"./IssueAdd":49,"./IssueFilter":51,"prop-types":15,"react":31,"react-router-dom":25,"whatwg-fetch":46}],53:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NumInput = function (_React$Component) {
+    _inherits(NumInput, _React$Component);
+
+    function NumInput(props) {
+        _classCallCheck(this, NumInput);
+
+        var _this = _possibleConstructorReturn(this, (NumInput.__proto__ || Object.getPrototypeOf(NumInput)).call(this, props));
+
+        _this.state = { value: _this.format(props.value) };
+        _this.onBlur = _this.onBlur.bind(_this);
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(NumInput, [{
+        key: 'UNSAFE_componentWillReceiveProps',
+        value: function UNSAFE_componentWillReceiveProps(newProps) {
+            this.setState({ value: this.format(newProps.value) });
+        }
+    }, {
+        key: 'onBlur',
+        value: function onBlur(e) {
+            this.props.onChange(e, this.unformat(this.state.value));
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(e) {
+            if (e.target.value.match(/^\d*$/)) {
+                this.setState({ value: e.target.value });
+            }
+        }
+    }, {
+        key: 'format',
+        value: function format(num) {
+            return num != null ? num.toString() : '';
+        }
+    }, {
+        key: 'unformat',
+        value: function unformat(str) {
+            var val = parseInt(str, 10);
+            return isNaN(val) ? null : val;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement('input', _extends({ type: 'text' }, this.props, { value: this.state.value,
+                onBlur: this.onChange
+            }));
+        }
+    }]);
+
+    return NumInput;
+}(_react2.default.Component);
+
+exports.default = NumInput;
+
+
+NumInput.propTypes = {
+    value: _propTypes2.default.number,
+    onChange: _propTypes2.default.func.isRequired
+};
+},{"prop-types":15,"react":31}]},{},[47]);

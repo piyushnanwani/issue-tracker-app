@@ -18,21 +18,6 @@ const issueFieldType = {
     title: 'required',
 };
 
-function validateIssue(issue) {
-    for (const field in issueFieldType) {
-        const type = issueFieldType[field];
-        console.log(type);
-        if (!type) {
-            delete issue[field];
-        } else if (type === 'required' && !issue[field]) {
-            return `${field} is required`;
-        }
-    }
-    if (!validIssueStatus[issue.status])
-        return `$[issue.status] is not a valid status.`
-
-    return null;
-}
 
 function convertIssue(issue) {
     if (issue.created)  issue.created = new Date(issue.created);
@@ -40,7 +25,30 @@ function convertIssue(issue) {
 
     return issue; 
 }
+
+function cleanupIssue(issue) {
+    const cleanUpIssue = {};
+    Object.keys(issue).forEach(field => {
+        if (issueFieldType[field]) cleanUpIssue[field] = issue[field];
+    });
+    return cleanUpIssue;
+}
+
+function validateIssue(issue) {
+    const errors = [];
+    Object.keys(issueFieldType).forEach(field => {
+        if (issueFieldType[field] === 'required' && !issue[field]) {
+            errors.push(`Missing mandatory field: ${field}`);
+        }
+    });
+    
+    if (!validIssueStatus[issue.status])
+        errors.push( `$[issue.status] is not a valid status.`);
+
+    return (errors.length ? errors.join(',') : null);
+}
 module.exports = {
-    validateIssue: validateIssue, 
+    validateIssue: validateIssue,
+    cleanupIssue : cleanupIssue, 
     convertIssue: convertIssue,
 };
