@@ -72,7 +72,7 @@ app.post('/api/issues', (req,res)=> {
         return;
     }
 
-    db.collection('issues').insertOne(newIssue).then(result=> 
+    db.collection('issues').insertOne(Issue.cleanupIssue(newIssue)).then(result=> 
         db.collection('issues').find({_id: result.insertedId}).limit(1).next()
         ).then(newIssue => {
             res.json(newIssue);
