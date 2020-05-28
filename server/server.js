@@ -97,6 +97,39 @@ app.delete('/api/issues/:id', (req,res)=> {
     })
     .catch(error=> {
         console.log(error);
-        res.status(500).json({message: `Internal Server Error : $(error)`});
+        res.status(500).json({message: `Internal Server Error : ${error}`});
     });
+});
+
+app.put('/api/issues/:id', (req, res) => {
+    let issueId;
+    try {
+        issueId = new Object(req.params.id);
+    } catch(error) {
+        res.status(422).json({ message : `Invalid issue ID format: ${error}`});
+        return;
+    }
+
+    const issue = req.body;
+    delete issue._id;
+
+    const err = Issue.validateIssue(issue);
+    if(err) {
+        res.status(422).json({ message : `Invalid request: ${err}`});
+        return;
+    }
+
+    db.collection('issues').update({ _id: issueId}, 
+        Issue.convertIssue(issue))
+        .then(()=> 
+        db.collection('issues').find({ _id: issueId}).limit(1).next()
+        )
+        .then(savedIssue=> {
+            res.json(savedIssue);
+        })
+        .catch(error => {
+            console.log(error);
+            
+            res.status(500).json({ message: `Internal Server Error: ${error}` });
+        });
 });
