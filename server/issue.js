@@ -20,10 +20,10 @@ const issueFieldType = {
 
 
 function convertIssue(issue) {
-    if (issue.created)  issue.created = new Date(issue.created);
+    if (issue.created) issue.created = new Date(issue.created);
     if (issue.completionDate) issue.completionDate = new Date(issue.completionDate);
 
-    return issue; 
+    return cleanupIssue(issue);
 }
 
 function cleanupIssue(issue) {
@@ -41,14 +41,14 @@ function validateIssue(issue) {
             errors.push(`Missing mandatory field: ${field}`);
         }
     });
-    
+
     if (!validIssueStatus[issue.status])
-        errors.push( `$[issue.status] is not a valid status.`);
+        errors.push(`$[issue.status] is not a valid status.`);
 
     return (errors.length ? errors.join(',') : null);
 }
 module.exports = {
     validateIssue: validateIssue,
-    cleanupIssue : cleanupIssue, 
+    cleanupIssue: cleanupIssue,
     convertIssue: convertIssue,
 };
