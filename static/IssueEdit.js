@@ -43,16 +43,45 @@ var IssueEdit = function (_React$Component) {
         _this.state = {
             issue: {
                 _id: '', title: '', status: '', owner: '', effort: null,
-                completionDate: '', created: ''
+                completionDate: null, created: null
             },
             invalidFields: {}
         };
         _this.onChange = _this.onChange.bind(_this);
         _this.onValidityChange = _this.onValidityChange.bind(_this);
+        _this.onSubmit = _this.onSubmit.bind(_this);
         return _this;
     }
 
     _createClass(IssueEdit, [{
+        key: 'onSubmit',
+        value: function onSubmit(event) {
+            var _this2 = this;
+
+            event.preventDefault();
+            if (Object.keys(this.state.invalidFields).length !== 0) {
+                return;
+            }
+            fetch('/api/issues/' + this.props.match.params.id, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(this.state.issue)
+            }).then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (updatedIssue) {
+                        updatedIssue.created = new Date(updatedIssue.created);
+                        if (updatedIssue.completionDate) {
+                            updatedIssue.completionDate = new Date(updatedIssue.completionDate);
+                        }
+                        _this2.setState({ issue: updatedIssue });
+                        alert('Updated issue successfully.');
+                    });
+                }
+            }).catch(function (err) {
+                alert('Error in sending data to server: ' + err.message);
+            });
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.loadData();
@@ -75,14 +104,14 @@ var IssueEdit = function (_React$Component) {
     }, {
         key: 'loadData',
         value: function loadData() {
-            var _this2 = this;
+            var _this3 = this;
 
             fetch('/api/issues/' + this.props.match.params.id).then(function (response) {
                 if (response.ok) {
                     response.json().then(function (issue) {
-                        issue.created = new Date(issue.created).toString();
+                        issue.created = new Date(issue.created);
                         issue.completionDate = issue.completionDate != null ? new Date(issue.completionDate) : '';
-                        _this2.setState(issue);
+                        _this3.setState(issue);
                     });
                 } else {
                     response.json().then(function (error) {
@@ -119,12 +148,12 @@ var IssueEdit = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     'form',
-                    null,
+                    { onSubmit: this.onSubmit },
                     'ID: ',
                     issue._id,
                     _react2.default.createElement('br', null),
                     'Created: ',
-                    issue.created,
+                    issue.created ? issue.created.toString() : '',
                     _react2.default.createElement('br', null),
                     'Status: ',
                     _react2.default.createElement(
