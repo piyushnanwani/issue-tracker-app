@@ -54,7 +54,7 @@ var App = function App(props) {
         ),
         _react2.default.createElement(
             'div',
-            { className: 'container', style: { marginLeft: '0px' } },
+            { className: 'container-fluid', style: { marginLeft: '0px' } },
             props.children
         ),
         _react2.default.createElement(
