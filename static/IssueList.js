@@ -26,6 +26,10 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactBootstrap = require('react-bootstrap');
+
+var _async = require('async');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87,8 +91,8 @@ var IssueRow = function IssueRow(props) {
             null,
             _react2.default.createElement(
                 'button',
-                { className: 'btn btn-danger', style: { fontSize: "12px", margin: "3px" }, onClick: onDeleteClick },
-                'Delete'
+                { className: 'btn btn-danger', onClick: onDeleteClick },
+                _react2.default.createElement('span', { 'class': 'glyphicon glyphicon-trash', 'aria-hidden': 'true' })
             ),
             ' '
         )

@@ -4,6 +4,8 @@ import IssueAdd from './IssueAdd';
 import IssueFilter from './IssueFilter';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {  Glyphicon } from 'react-bootstrap';
+import { auto } from 'async';
 
 const IssueRow = (props) => {
     function onDeleteClick() {
@@ -19,7 +21,9 @@ const IssueRow = (props) => {
         <td>{props.issue.completionDate ?
             props.issue.completionDate.toDateString() : ''}</td>
         <td>{props.issue.title}</td>
-        <td><button className="btn btn-danger" style={{fontSize:"12px", margin:"3px"}} onClick={onDeleteClick}>Delete</button> </td>
+            <td><button className="btn btn-danger" onClick={onDeleteClick}>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
+            </button> </td>
     </tr>
     );
 };

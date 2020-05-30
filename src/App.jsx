@@ -17,7 +17,7 @@ const App = (props) => (
         <div >
             <h1 className="jumbotron" style= {{marginTop:"0px", height:"5px"}}  >Issue Tracker</h1>
         </div>
-        <div className="container" style={{marginLeft:'0px'}}>
+        <div className="container-fluid" style={{marginLeft:'0px'}}>
             {props.children}
         </div>
         <div className="panel-footer" style={{ marginTop: '100px', fontFamily : 'Helvetics', fontSize: '14px' }}>
