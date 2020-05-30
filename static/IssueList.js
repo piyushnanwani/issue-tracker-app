@@ -92,7 +92,7 @@ var IssueRow = function IssueRow(props) {
             _react2.default.createElement(
                 'button',
                 { className: 'btn btn-danger', onClick: onDeleteClick },
-                _react2.default.createElement('span', { 'class': 'glyphicon glyphicon-trash', 'aria-hidden': 'true' })
+                _react2.default.createElement('span', { className: 'glyphicon glyphicon-trash', 'aria-hidden': 'true' })
             ),
             ' '
         )
@@ -147,11 +147,7 @@ function IssueTable(props) {
                     null,
                     'Title'
                 ),
-                _react2.default.createElement(
-                    'th',
-                    null,
-                    'Delete Issue'
-                )
+                _react2.default.createElement('th', null)
             )
         ),
         _react2.default.createElement(

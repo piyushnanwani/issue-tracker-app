@@ -25,7 +25,7 @@ export default class IssueAdd extends React.Component {
                 <div className="row" >
                     <div className="panel panel-default" >
                         <div className="panel-heading" style={{width:"500px", border:"none"}}>
-                            <h3>Add an Event</h3>
+                            <h3>Create an Issue</h3>
                         </div>
                     </div>
                 </div>

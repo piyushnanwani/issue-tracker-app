@@ -52145,7 +52145,7 @@ var IssueAdd = function (_React$Component) {
                             _react2.default.createElement(
                                 "h3",
                                 null,
-                                "Add an Event"
+                                "Create an Issue"
                             )
                         )
                     )
@@ -52211,6 +52211,8 @@ var _NumInput2 = _interopRequireDefault(_NumInput);
 var _DateInput = require('./DateInput');
 
 var _DateInput2 = _interopRequireDefault(_DateInput);
+
+var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52335,74 +52337,131 @@ var IssueEdit = function (_React$Component) {
                 'div',
                 null,
                 _react2.default.createElement(
-                    'form',
-                    { onSubmit: this.onSubmit },
-                    'ID: ',
-                    issue._id,
-                    _react2.default.createElement('br', null),
-                    'Created: ',
-                    issue.created ? issue.created.toString() : '',
-                    _react2.default.createElement('br', null),
-                    'Status: ',
+                    'div',
+                    { className: 'panel panel-default' },
                     _react2.default.createElement(
-                        'select',
-                        { name: 'status', value: issue.status, onChange: this.onChange },
+                        'div',
+                        { className: 'panel-heading' },
+                        'Edit Issue'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'panel-body' },
                         _react2.default.createElement(
-                            'option',
-                            { value: 'New' },
-                            'New'
-                        ),
-                        _react2.default.createElement(
-                            'option',
-                            { value: 'Open' },
-                            'Open'
-                        ),
-                        _react2.default.createElement(
-                            'option',
-                            { value: 'Assigned' },
-                            'Assigned'
-                        ),
-                        _react2.default.createElement(
-                            'option',
-                            { value: 'Fixed' },
-                            'Fixed'
-                        ),
-                        _react2.default.createElement(
-                            'option',
-                            { value: 'Verified' },
-                            'Verified'
-                        ),
-                        _react2.default.createElement(
-                            'option',
-                            { value: 'Closed' },
-                            'Closed'
+                            'div',
+                            { className: 'row', style: { marginLeft: "10px" } },
+                            _react2.default.createElement(
+                                'form',
+                                { onSubmit: this.onSubmit },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    'ID: ',
+                                    issue._id
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    'Created: ',
+                                    issue.created ? issue.created.toString() : ''
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        null,
+                                        'Title: ',
+                                        _react2.default.createElement('input', { className: 'form-control', name: 'title', size: 50, value: issue.title, onChange: this.onChange })
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { 'class': 'col-xs-3' },
+                                        'Status : ',
+                                        _react2.default.createElement(
+                                            'select',
+                                            { className: 'form-control col-md-6', name: 'status', value: issue.status, onChange: this.onChange },
+                                            _react2.default.createElement(
+                                                'option',
+                                                { value: 'New' },
+                                                'New'
+                                            ),
+                                            _react2.default.createElement(
+                                                'option',
+                                                { value: 'Open' },
+                                                'Open'
+                                            ),
+                                            _react2.default.createElement(
+                                                'option',
+                                                { value: 'Assigned' },
+                                                'Assigned'
+                                            ),
+                                            _react2.default.createElement(
+                                                'option',
+                                                { value: 'Fixed' },
+                                                'Fixed'
+                                            ),
+                                            _react2.default.createElement(
+                                                'option',
+                                                { value: 'Verified' },
+                                                'Verified'
+                                            ),
+                                            _react2.default.createElement(
+                                                'option',
+                                                { value: 'Closed' },
+                                                'Closed'
+                                            )
+                                        )
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { 'class': 'col-xs-3' },
+                                        'Owner : ',
+                                        _react2.default.createElement('input', { className: 'form-control', name: 'owner', value: issue.owner, onChange: this.onChange })
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { 'class': 'col-xs-3' },
+                                        'Effort : ',
+                                        _react2.default.createElement(_NumInput2.default, { className: 'form-control ', size: 5, name: 'effort', value: issue.effort, onChange: this.onChange })
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group ' },
+                                    'Completion Date :',
+                                    _react2.default.createElement(_DateInput2.default, { className: 'form-control', name: 'completionDate', value: this.completionDate,
+                                        onChange: this.onChange, onValidityChange: this.onValidityChange })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    validationMessage
+                                ),
+                                _react2.default.createElement(
+                                    'button',
+                                    { className: 'btn btn-primary', type: 'submit' },
+                                    'Submit'
+                                ),
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/issues' },
+                                    ' Back'
+                                )
+                            )
                         )
-                    ),
-                    _react2.default.createElement('br', null),
-                    'Owner: ',
-                    _react2.default.createElement('input', { name: 'owner', value: issue.owner, onChange: this.onChange }),
-                    _react2.default.createElement('br', null),
-                    'Effort: ',
-                    _react2.default.createElement(_NumInput2.default, { size: 5, name: 'effort', value: issue.effort, onChange: this.onChange }),
-                    _react2.default.createElement('br', null),
-                    'Completion Date ',
-                    _react2.default.createElement(_DateInput2.default, { name: 'completionDate', value: this.completionDate,
-                        onChange: this.onChange, onValidityChange: this.onValidityChange }),
-                    _react2.default.createElement('br', null),
-                    'Title: ',
-                    _react2.default.createElement('input', { name: 'title', size: 50, value: issue.title, onChange: this.onChange }),
-                    _react2.default.createElement('br', null),
-                    validationMessage,
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'submit' },
-                        'Submit'
-                    ),
-                    _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        { to: '/issues' },
-                        ' Back to issue list'
                     )
                 )
             );
@@ -52418,7 +52477,7 @@ exports.default = IssueEdit;
 IssueEdit.propTypes = {
     params: _propTypes2.default.object
 };
-},{"./DateInput":230,"./NumInput":235,"prop-types":62,"react":208,"react-router-dom":198}],233:[function(require,module,exports){
+},{"./DateInput":230,"./NumInput":235,"prop-types":62,"react":208,"react-bootstrap":170,"react-router-dom":198}],233:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52604,8 +52663,8 @@ var IssueRow = function IssueRow(props) {
             null,
             _react2.default.createElement(
                 'button',
-                { className: 'btn btn-danger', style: { height: "auto", width: "auto" }, onClick: onDeleteClick },
-                _react2.default.createElement('span', { 'class': 'glyphicon glyphicon-trash', 'aria-hidden': 'true' })
+                { className: 'btn btn-danger', onClick: onDeleteClick },
+                _react2.default.createElement('span', { className: 'glyphicon glyphicon-trash', 'aria-hidden': 'true' })
             ),
             ' '
         )
