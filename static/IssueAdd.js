@@ -62,7 +62,7 @@ var IssueAdd = function (_React$Component) {
                             _react2.default.createElement(
                                 "h3",
                                 null,
-                                "Add an Event"
+                                "Create an Issue"
                             )
                         )
                     )

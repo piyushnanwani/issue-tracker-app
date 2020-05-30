@@ -22,7 +22,7 @@ const IssueRow = (props) => {
             props.issue.completionDate.toDateString() : ''}</td>
         <td>{props.issue.title}</td>
             <td><button className="btn btn-danger" onClick={onDeleteClick}>
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
+                <span className="glyphicon glyphicon-trash" aria-hidden="true"></span> 
             </button> </td>
     </tr>
     );
@@ -44,7 +44,7 @@ function IssueTable(props) {
                     <th>Effort</th>
                     <th>Completion Date</th>
                     <th>Title</th>
-                    <th>Delete Issue</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

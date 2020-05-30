@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import NumInput from './NumInput'
 import DateInput from './DateInput';
-
+import { FormGroup, FormControl, ControlLabel, ButtonToolbar, Button, Panel, Form, Col} from 'react-bootstrap';
 export default class IssueEdit extends React.Component
 { 
     constructor(){
@@ -97,34 +97,60 @@ export default class IssueEdit extends React.Component
         before submitting</div>);
         return (
             <div>
-                <form onSubmit={this.onSubmit}>
-                    ID: {issue._id}
-                    <br/>
-                    Created: {issue.created ? issue.created.toString() : ''}
-                    <br/>
-                    Status: <select name="status" value={issue.status} onChange={this.onChange}>
-                        <option value="New">New</option>
-                        <option value="Open">Open</option>
-                        <option value="Assigned">Assigned</option>
-                        <option value="Fixed">Fixed</option>
-                        <option value="Verified">Verified</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                    <br/>
-                    Owner: <input name="owner" value={issue.owner} onChange={this.onChange}/>
-                    <br/>
-                    Effort: <NumInput size={5} name="effort" value={issue.effort} onChange={this.onChange} />
-                    <br/>
-                    Completion Date <DateInput name="completionDate" value={this.completionDate} 
-                    onChange={this.onChange} onValidityChange={this.onValidityChange} />
-                    <br/>
-                    Title: <input name="title" size={50} value={issue.title} onChange={this.onChange} />
-                    <br/>
-                    {validationMessage}
-                    <br/>
-                    <button type="submit">Submit</button>
-                    <Link to="/issues"> Back to issue list</Link>
-                </form>
+                <div className="panel panel-default" >
+                    <div className="panel-heading">Edit Issue</div>
+                    <div className="panel-body">
+                        <div className="row" style={{marginLeft:"10px"}}>
+                            <form onSubmit={this.onSubmit} >
+                                <div className="form-group">
+                                    ID: {issue._id}
+                                </div>
+                                <div className="form-group">
+                                Created: {issue.created ? issue.created.toString() : ''}
+                                </div>
+                                <div className="form-group">
+                                    <div >
+                                    Title: <input className="form-control" name="title" size={50} value={issue.title} onChange={this.onChange} />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div class="col-xs-3">
+                                        Status : <select className="form-control col-md-6" name="status" value={issue.status} onChange={this.onChange}>
+                                        <option value="New">New</option>
+                                        <option value="Open">Open</option>
+                                        <option value="Assigned">Assigned</option>
+                                        <option value="Fixed">Fixed</option>
+                                        <option value="Verified">Verified</option>
+                                        <option value="Closed">Closed</option>
+                                        </select>
+                                        </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <div class="col-xs-3">
+                                    Owner : <input className="form-control" name="owner" value={issue.owner} onChange={this.onChange}/>
+
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div class="col-xs-3">
+                                    Effort : <NumInput className="form-control " size={5} name="effort" value={issue.effort} onChange={this.onChange} />
+
+                                    </div>
+                                </div>
+                                <div className="form-group ">
+                                    Completion Date :<DateInput className="form-control" name="completionDate" value={this.completionDate} 
+                                onChange={this.onChange} onValidityChange={this.onValidityChange} />
+                                </div>
+                                <div className="form-group">
+                                {validationMessage}
+                                </div>
+                                <button className="btn btn-primary" type="submit">Submit</button>
+                                <Link to="/issues"> Back</Link>
+                            </form>
+                        </div>   
+                    </div>
+                </div>
             </div>
         )
     }
