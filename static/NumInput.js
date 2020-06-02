@@ -82,6 +82,6 @@ exports.default = NumInput;
 
 
 NumInput.propTypes = {
-    value: _propTypes2.default.number,
+    value: _propTypes2.default.string,
     onChange: _propTypes2.default.func.isRequired
 };

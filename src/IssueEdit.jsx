@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {Alert, Collapse} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import NumInput from './NumInput'
 import DateInput from './DateInput';
@@ -13,8 +14,10 @@ export default class IssueEdit extends React.Component
                 _id: '', title:'', status: '', owner:'', effort:null,
                 completionDate: null, created:null
             },
-            invalidFields: {}
+            invalidFields: {}, showingValidation: false, 
         };
+        this.dismissValidation = this.dismissValidation.bind(this);
+        this.showValdation = this.showValdation.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onValidityChange = this.onValidityChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -22,6 +25,7 @@ export default class IssueEdit extends React.Component
 
     onSubmit(event) {
         event.preventDefault();
+        this.showValdation();
         if(Object.keys(this.state.invalidFields).length !== 0) {
             return;
         }
@@ -90,11 +94,28 @@ export default class IssueEdit extends React.Component
         this.setState({ invalidFields });
     }
 
+    showValdation() {
+        this.setState({ showingValidation: true });
+    }
+
+    dismissValidation() {
+        this.setState({ showingValidation: false });
+    }
+
     render(){
         const issue = this.state.issue;
-        const validationMessage = Object.keys(this.state.invalidFields).length
-        === 0 ? null : (<div className="error">Please correct invalid fields 
-        before submitting</div>);
+        let validationMessage = null;
+        if(Object.keys(this.state.invalidFields).length !==0 && 
+        this.state.showingValidation ) {
+            validationMessage = (
+                <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Holy guacamole!</strong> Please correct invalid fields before submitting.
+                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            )
+        }
         return (
             <div>
                 <div className="panel panel-default" >
@@ -114,7 +135,7 @@ export default class IssueEdit extends React.Component
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <div class="col-xs-3">
+                                    <div className="col-xs-3">
                                         Status : <select className="form-control col-md-6" name="status" value={issue.status} onChange={this.onChange}>
                                         <option value="New">New</option>
                                         <option value="Open">Open</option>
@@ -127,26 +148,28 @@ export default class IssueEdit extends React.Component
                                 </div>
 
                                 <div className="form-group">
-                                    <div class="col-xs-3">
+                                    <div className="col-xs-3">
                                     Owner : <input className="form-control" name="owner" value={issue.owner} onChange={this.onChange}/>
 
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <div class="col-xs-3">
+                                    <div className="col-xs-3">
                                     Effort : <NumInput className="form-control " size={5} name="effort" value={issue.effort} onChange={this.onChange} />
 
                                     </div>
                                 </div>
                                 <div className="form-group ">
-                                    Completion Date :<DateInput className="form-control" name="completionDate" value={this.completionDate} 
+                                    Completion Date :<DateInput className="form-control" name="completionDate" value={issue.completionDate} 
                                 onChange={this.onChange} onValidityChange={this.onValidityChange} />
-                                </div>
-                                <div className="form-group">
-                                {validationMessage}
                                 </div>
                                 <button className="btn btn-primary" type="submit">Submit</button>
                                 <Link to="/issues"> Back</Link>
+                                <div className="form-group">
+                                        <div className="col-xs-3">
+                                            {validationMessage}
+                                         </div>
+                                </div>
                             </form>
                         </div>   
                     </div>

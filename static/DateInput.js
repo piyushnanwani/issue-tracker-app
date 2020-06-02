@@ -38,8 +38,8 @@ var DateInput = function (_React$Component) {
     }
 
     _createClass(DateInput, [{
-        key: 'UNSAFE_componentWillReceiveProps',
-        value: function UNSAFE_componentWillReceiveProps(newProps) {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(newProps) {
             if (newProps.value !== this.props.value) {
                 this.setState({ value: this.editFormat(newProps.value) });
             }
@@ -70,12 +70,12 @@ var DateInput = function (_React$Component) {
     }, {
         key: 'displayFormat',
         value: function displayFormat(date) {
-            return date != null ? date.toDateString() : '';
+            return date != null ? new Date(date).toDateString() : '';
         }
     }, {
         key: 'editFormat',
         value: function editFormat(date) {
-            return date != null ? date.toDateString() : '';
+            return date != null ? new Date(date).toISOString().substr(0, 10) : '';
         }
     }, {
         key: 'unformat',
@@ -101,3 +101,10 @@ var DateInput = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = DateInput;
+
+DateInput.prototypes = {
+    value: _propTypes2.default.object,
+    onChange: _propTypes2.default.func.isRequired,
+    onValidityChange: _propTypes2.default.func,
+    name: _propTypes2.default.string.isRequired
+};

@@ -10,7 +10,7 @@ export default class DateInput extends React.Component{
         this.onChange = this.onChange.bind(this);
     }
 
-    UNSAFE_componentWillReceiveProps(newProps){
+    componentWillReceiveProps(newProps){
         if(newProps.value !== this.props.value) {
             this.setState({ value: this.editFormat(newProps.value)});
         }
@@ -36,11 +36,11 @@ export default class DateInput extends React.Component{
     }
 
     displayFormat(date) {
-        return (date!=null) ? date.toDateString() : '';
+        return (date != null) ? new Date(date).toDateString(): '';
     }
 
     editFormat(date) {
-        return (date != null) ? date.toDateString() : ''; 
+        return (date != null) ? new Date(date).toISOString().substr(0,10) : ''; 
     }
 
     unformat(str) {
@@ -61,4 +61,10 @@ export default class DateInput extends React.Component{
             />
         );
     }
+}
+DateInput.prototypes = {
+    value: PropTypes.object, 
+    onChange: PropTypes.func.isRequired, 
+    onValidityChange: PropTypes.func, 
+    name: PropTypes.string.isRequired,
 }

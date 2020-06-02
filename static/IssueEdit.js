@@ -12,6 +12,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = require('react-router-dom');
 
+var _reactBootstrap = require('react-bootstrap');
+
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -23,8 +25,6 @@ var _NumInput2 = _interopRequireDefault(_NumInput);
 var _DateInput = require('./DateInput');
 
 var _DateInput2 = _interopRequireDefault(_DateInput);
-
-var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47,8 +47,10 @@ var IssueEdit = function (_React$Component) {
                 _id: '', title: '', status: '', owner: '', effort: null,
                 completionDate: null, created: null
             },
-            invalidFields: {}
+            invalidFields: {}, showingValidation: false
         };
+        _this.dismissValidation = _this.dismissValidation.bind(_this);
+        _this.showValdation = _this.showValdation.bind(_this);
         _this.onChange = _this.onChange.bind(_this);
         _this.onValidityChange = _this.onValidityChange.bind(_this);
         _this.onSubmit = _this.onSubmit.bind(_this);
@@ -61,6 +63,7 @@ var IssueEdit = function (_React$Component) {
             var _this2 = this;
 
             event.preventDefault();
+            this.showValdation();
             if (Object.keys(this.state.invalidFields).length !== 0) {
                 return;
             }
@@ -137,14 +140,41 @@ var IssueEdit = function (_React$Component) {
             this.setState({ invalidFields: invalidFields });
         }
     }, {
+        key: 'showValdation',
+        value: function showValdation() {
+            this.setState({ showingValidation: true });
+        }
+    }, {
+        key: 'dismissValidation',
+        value: function dismissValidation() {
+            this.setState({ showingValidation: false });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var issue = this.state.issue;
-            var validationMessage = Object.keys(this.state.invalidFields).length === 0 ? null : _react2.default.createElement(
-                'div',
-                { className: 'error' },
-                'Please correct invalid fields before submitting'
-            );
+            var validationMessage = null;
+            if (Object.keys(this.state.invalidFields).length !== 0 && this.state.showingValidation) {
+                validationMessage = _react2.default.createElement(
+                    'div',
+                    { className: 'alert alert-warning alert-dismissible fade show', role: 'alert' },
+                    _react2.default.createElement(
+                        'strong',
+                        null,
+                        'Holy guacamole!'
+                    ),
+                    ' Please correct invalid fields before submitting.',
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'button', className: 'close', 'data-dismiss': 'alert', 'aria-label': 'Close' },
+                        _react2.default.createElement(
+                            'span',
+                            { 'aria-hidden': 'true' },
+                            '\xD7'
+                        )
+                    )
+                );
+            }
             return _react2.default.createElement(
                 'div',
                 null,
@@ -192,7 +222,7 @@ var IssueEdit = function (_React$Component) {
                                     { className: 'form-group' },
                                     _react2.default.createElement(
                                         'div',
-                                        { 'class': 'col-xs-3' },
+                                        { className: 'col-xs-3' },
                                         'Status : ',
                                         _react2.default.createElement(
                                             'select',
@@ -235,7 +265,7 @@ var IssueEdit = function (_React$Component) {
                                     { className: 'form-group' },
                                     _react2.default.createElement(
                                         'div',
-                                        { 'class': 'col-xs-3' },
+                                        { className: 'col-xs-3' },
                                         'Owner : ',
                                         _react2.default.createElement('input', { className: 'form-control', name: 'owner', value: issue.owner, onChange: this.onChange })
                                     )
@@ -245,7 +275,7 @@ var IssueEdit = function (_React$Component) {
                                     { className: 'form-group' },
                                     _react2.default.createElement(
                                         'div',
-                                        { 'class': 'col-xs-3' },
+                                        { className: 'col-xs-3' },
                                         'Effort : ',
                                         _react2.default.createElement(_NumInput2.default, { className: 'form-control ', size: 5, name: 'effort', value: issue.effort, onChange: this.onChange })
                                     )
@@ -254,13 +284,8 @@ var IssueEdit = function (_React$Component) {
                                     'div',
                                     { className: 'form-group ' },
                                     'Completion Date :',
-                                    _react2.default.createElement(_DateInput2.default, { className: 'form-control', name: 'completionDate', value: this.completionDate,
+                                    _react2.default.createElement(_DateInput2.default, { className: 'form-control', name: 'completionDate', value: issue.completionDate,
                                         onChange: this.onChange, onValidityChange: this.onValidityChange })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'form-group' },
-                                    validationMessage
                                 ),
                                 _react2.default.createElement(
                                     'button',
@@ -271,6 +296,15 @@ var IssueEdit = function (_React$Component) {
                                     _reactRouterDom.Link,
                                     { to: '/issues' },
                                     ' Back'
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'col-xs-3' },
+                                        validationMessage
+                                    )
                                 )
                             )
                         )

@@ -42,6 +42,6 @@ export default class NumInput extends React.Component {
 }
 
 NumInput.propTypes = {
-    value: PropTypes.number,
+    value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
 }
